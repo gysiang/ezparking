@@ -1,0 +1,56 @@
+{
+  "name": "ezparking",
+  "version": "1.0.0",
+  "description": "Check Available Parking Spots Near You.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gysiang/ezparking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gysiang/ezparking/issues"
+  },
+  "homepage": "https://github.com/gysiang/ezparking#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.1",
+    "method-override": "^3.0.0",
+    "nodemon": "^2.0.19",
+    "pg": "^8.7.3",
+    "sequelize": "^6.21.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-react": "^7.18.6",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
+    "css-loader": "^6.7.1",
+    "eslint": "^8.19.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.0",
+    "eslint-plugin-react": "^7.30.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-refresh": "^0.14.0",
+    "sass": "^1.53.0",
+    "sass-loader": "^13.0.2",
+    "sequelize-cli": "^6.4.1",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-middleware": "^5.3.3",
+    "webpack-dev-server": "^4.9.3",
+    "webpack-hot-middleware": "^2.25.1",
+    "webpack-merge": "^5.8.0"
+  }
+}
