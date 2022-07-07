@@ -5,4 +5,8 @@ class carparksRouter {
   constructor(controller) {
     this.controller = controller;
   }
+  router() {
+    return router;
+  }
 }
+module.exports = carparksRouter;

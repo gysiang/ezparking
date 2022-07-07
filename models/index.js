@@ -47,13 +47,13 @@ db.User = initUserModel(sequelize, Sequelize.DataTypes);
 db.Carpark = initCarparkModel(sequelize, Sequelize.DataTypes);
 
 // Define models' assosiation: Many to many
-db.User.belongsToMany(db.Carpark, { through: db.UserCarpark });
-db.Carpark.belongsToMany(db.User, { through: db.UserCarpark });
+db.User.belongsToMany(db.Carpark, { through: "user_carparks" });
+db.Carpark.belongsToMany(db.User, { through: "user_carparks" });
 
-db.User.hasMany(db.UserCarpark);
-db.UserCarpark.belongsTo(db.User);
-db.Carpark.hasMany(db.UserCarpark);
-db.UserCarpark.belongsTo(db.Carpark);
+// db.User.hasMany(db.UserCarpark);
+// db.UserCarpark.belongsTo(db.User);
+// db.Carpark.hasMany(db.UserCarpark);
+// db.UserCarpark.belongsTo(db.Carpark);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
