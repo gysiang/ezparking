@@ -30,3 +30,13 @@ Check Available Parking Spots Near You.
 ## Database ERD
 
 - Click [here](https://lucid.app/lucidchart/e8deaaf7-2a5b-4522-83fb-7a91c5e73dea/edit?viewport_loc=-49%2C149%2C1976%2C1479%2C0_0&invitationId=inv_1e3381a8-8d49-4e25-92ad-dafae3b9c135#) to view
+
+## JSON File
+
+carparks-all.json
+
+- List of all car parks in Singapore
+
+carparks.json
+
+- List of open car park lots in singapore by car park code
