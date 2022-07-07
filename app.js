@@ -4,6 +4,8 @@ const methodOverride = require('method-override');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const webpackConfig = require('./webpack_conf/webpack.dev.js');
+const { resolve } = require('path');
 
 // Initialise Express instance
 const app = express();
@@ -20,6 +22,7 @@ app.use(methodOverride('_method'));
 // Expose the files stored in the public folder
 app.use(express.static('public'));
 // Expose the files stored in the distribution folder
+app.use(express.static('dist'));
 
 // Set up Webpack in dev env
 const env = process.env.NODE_ENV || 'development';
@@ -37,13 +40,17 @@ if (env === 'development') {
   }));
 }
 
+  app.get('/', (request, response) => {
+    response.sendFile(resolve('dist', 'main.html'));
+  });
+
 // import db
-const db = require("./models/index.js");
+// const db = require("./models/index.js");
 // import controllers
 // init controllers
 // import routers
-// 
 
 // Set Express to listen on the given port
 const PORT = process.env.PORT || 3004;
-app.listen(PORT);
+app.listen(PORT) 
+console.log(`running on ${PORT}`);
