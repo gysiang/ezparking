@@ -10,7 +10,7 @@ class UsersRouter {
     router.get("/", this.controller.showHome.bind(this.controller));
     // .post("/signup", this.controller.addUser.bind(this.controller))
     // .post("/login", this.controller.loginUser.bind(this.controller))
-    // .get("/logout", this.controller.logoutUser.bind(this.controller));
+    // router.get("/logout", this.controller.logoutUser.bind(this.controller));
     return router;
   }
 }
