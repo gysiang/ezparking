@@ -5,3 +5,5 @@ class Users extends Base {
     super(model);
   }
 }
+
+module.exports = Users;
