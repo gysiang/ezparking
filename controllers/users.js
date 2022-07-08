@@ -1,6 +1,6 @@
 const Base = require("./base");
 
-class Carparks extends Base {
+class Users extends Base {
   constructor(model) {
     super(model);
   }
@@ -13,4 +13,4 @@ class Carparks extends Base {
   }
 }
 
-module.exports = Carparks;
+module.exports = Users;
