@@ -9,6 +9,7 @@ const { resolve } = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const jwt = require("jsonwebtoken");
 
 // Initialise Express instance
 const app = express();
@@ -47,16 +48,12 @@ if (env === "development") {
   );
 }
 
-app.get("/", (request, response) => {
-  response.sendFile(resolve("dist", "main.html"));
-});
-
 // import db
 const db = require("./models/index.js");
 
 // import controllers
-const Users = require("./controllers/users");
-const Carparks = require("./controllers/carparks");
+const Users = require("./controllers/Users");
+const Carparks = require("./controllers/Carparks");
 
 // init controllers
 const usersController = new Users(db.User);

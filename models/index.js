@@ -1,15 +1,14 @@
-"use strict";
-
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
-const initCarparkModel = require("./carpark");
-const initUserModel = require("./user");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.js")[env];
 const db = {};
-console.log(config)
+
+// Import model functions
+const initCarparkModel = require("./carpark");
+const initUserModel = require("./user");
 
 let sequelize;
 if (config.use_env_variable) {
@@ -50,11 +49,6 @@ db.Carpark = initCarparkModel(sequelize, Sequelize.DataTypes);
 // Define models' assosiation: Many to many
 db.User.belongsToMany(db.Carpark, { through: "user_carparks" });
 db.Carpark.belongsToMany(db.User, { through: "user_carparks" });
-
-// db.User.hasMany(db.UserCarpark);
-// db.UserCarpark.belongsTo(db.User);
-// db.Carpark.hasMany(db.UserCarpark);
-// db.UserCarpark.belongsTo(db.Carpark);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
