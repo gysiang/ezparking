@@ -10,10 +10,8 @@ export default function App() {
   return (
     <div>
       <div>
-        {!isLoggedIn && <Signup setIsSignup={setIsSignup} />}
-        {isSignup && (
-          <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-        )}
+        {!isLoggedIn && !isSignup && <Signup setIsSignup={setIsSignup} />}
+        {isSignup && <Login setIsLoggedIn={setIsLoggedIn} />}
       </div>
     </div>
   );

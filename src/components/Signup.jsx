@@ -54,7 +54,7 @@ export default function Signup({ setIsSignup }) {
         placeholder="Email"
       />
       <input
-        type="text"
+        type="password"
         value={userPassword}
         onChange={userPasswordChange}
         placeholder="Password"

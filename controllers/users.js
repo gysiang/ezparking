@@ -2,7 +2,6 @@ const Base = require("./base");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
-const { async } = require("regenerator-runtime");
 
 class Users extends Base {
   constructor(model) {
@@ -23,9 +22,7 @@ class Users extends Base {
       });
 
       if (existingUser) {
-        return res
-          .status(400)
-          .json({ msg: "User already registered with this email." });
+        return res.status(400).json({ msg: "User signup error." });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -58,7 +55,9 @@ class Users extends Base {
       }
 
       if (await bcrypt.compare(req.body.passord, user.password)) {
-        const token = jwt.sign({ id: user.id }, process.env.JTW_SECRET);
+        const token = jwt.sign({ id: user.id }, process.env.JTW_SECRET, {
+          expiresIn: "8 hours",
+        });
         res.json({
           token,
           user: {
@@ -91,4 +90,5 @@ class Users extends Base {
     }
   }
 }
+
 module.exports = Users;
