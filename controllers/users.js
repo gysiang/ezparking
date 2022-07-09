@@ -1,6 +1,9 @@
 const Base = require("./base");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const auth = require("../middleware/auth");
+const dotenv = require("dotenv");
+dotenv.config();
 
 class Users extends Base {
   constructor(model) {
@@ -9,11 +12,16 @@ class Users extends Base {
 
   async signupUser(req, res) {
     try {
-      const hashedPassword = await bcrypt.hash(req.body.passord, 10);
+      const { name, email, password } = req.body;
+      if (!name || !email || !password) {
+        return res.status(400).json({ msg: "Need to fill all field!" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
       console.log("hashedPassword:", hashedPassword);
       const newUser = {
-        name: req.body.name,
-        email: req.body.email,
+        name: name,
+        email: email,
         passord: hashedPassword,
       };
 
@@ -38,14 +46,21 @@ class Users extends Base {
         return res.status(400).send("User is not found!");
       }
 
-      if (await bcrypt.compare(req.body.passord, user.passord)) {
-        res.send("Login success");
+      if (await bcrypt.compare(req.body.passord, user.password)) {
+        const token = jwt.sign({ id: user.id }, process.env.JTW_SECRET);
+        res.json({
+          token,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          },
+        });
       }
     } catch (error) {
       console.log("Error message: ", error);
-      res.send("Unauthoried user");
+      return res.send("Unauthoried user");
     }
   }
 }
-
 module.exports = Users;
