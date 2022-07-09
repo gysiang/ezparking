@@ -8,12 +8,12 @@ class UsersRouter {
   }
 
   router() {
-    router.get("/", (req, res) => {
-      res.sendFile(resolve("dist", "main.html"));
-    });
-
-    // .post("/signup", this.controller.addUser.bind(this.controller))
-    // .post("/login", this.controller.loginUser.bind(this.controller))
+    router
+      .get("/", (req, res) => {
+        res.sendFile(resolve("dist", "main.html"));
+      })
+      .post("/signup", this.controller.signupUser.bind(this.controller))
+      .post("/login", this.controller.loginUser.bind(this.controller));
     // router.get("/logout", this.controller.logoutUser.bind(this.controller));
     return router;
   }
