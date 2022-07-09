@@ -2,8 +2,7 @@ const Base = require("./base");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
-const dotenv = require("dotenv");
-dotenv.config();
+const { async } = require("regenerator-runtime");
 
 class Users extends Base {
   constructor(model) {
@@ -17,12 +16,24 @@ class Users extends Base {
         return res.status(400).json({ msg: "Need to fill all field!" });
       }
 
+      const existingUser = await this.model.findOne({
+        where: {
+          email: email,
+        },
+      });
+
+      if (existingUser) {
+        return res
+          .status(400)
+          .json({ msg: "User already registered with this email." });
+      }
+
       const hashedPassword = await bcrypt.hash(password, 10);
       console.log("hashedPassword:", hashedPassword);
       const newUser = {
         name: name,
         email: email,
-        passord: hashedPassword,
+        password: hashedPassword,
       };
 
       await this.model.create(newUser);
@@ -60,6 +71,23 @@ class Users extends Base {
     } catch (error) {
       console.log("Error message: ", error);
       return res.send("Unauthoried user");
+    }
+  }
+
+  async tokenValidation(req, res) {
+    try {
+      const token = req.header("auth-token");
+      if (!token) return res.json(false);
+
+      const verified = jwt.verify(token, process.env.JTW_SECRET);
+      if (!verified) return res.json(false);
+
+      const user = await this.model.findById(verified.id);
+      if (!user) return res.json(false);
+
+      return res.json(true);
+    } catch (error) {
+      res.status(500).json({ error: error.mesage });
     }
   }
 }
