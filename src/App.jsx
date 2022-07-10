@@ -9,6 +9,7 @@ export default function App() {
   const [isSignedup, setIsSignedup] = useState(false);
 
   console.log("signed up status: ", isSignedup);
+  console.log("login status: ", isLoggedIn);
 
   return (
     <div>

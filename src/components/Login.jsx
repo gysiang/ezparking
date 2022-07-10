@@ -22,8 +22,12 @@ export default function Login({ setIsSignedup, setIsLoggedIn }) {
     axios
       .post("/login", user)
       .then((result) => {
-        setIsLoggedIn(true);
-        console.log(result.data);
+        if (result.data !== "Unauthoried user") {
+          setIsLoggedIn(true);
+          console.log(result.data);
+        } else {
+          alert("Unauthorized user");
+        }
       })
       .catch((error) => {
         console.log("Error message: ", error);
