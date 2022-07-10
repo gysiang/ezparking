@@ -3,7 +3,7 @@ const router = express.Router();
 const { resolve } = require("path");
 const auth = require("../middleware/auth");
 
-class carparksRouter {
+class CarparksRouter {
   constructor(controller) {
     this.controller = controller;
   }
@@ -17,4 +17,4 @@ class carparksRouter {
     return router;
   }
 }
-module.exports = carparksRouter;
+module.exports = CarparksRouter;
