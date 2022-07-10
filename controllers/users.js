@@ -69,7 +69,7 @@ class Users extends Base {
       }
     } catch (error) {
       console.log("Error message: ", error);
-      return res.send("Unauthoried user");
+      return res.send("Unauthorized user");
     }
   }
 }
