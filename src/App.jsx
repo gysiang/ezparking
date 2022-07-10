@@ -53,7 +53,7 @@ console.log(position)
 
 function MapContainer () {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey:"AIzaSyAbXhFVcuk-ht7aTKSvtxK1_8zIp9gFLPw",
+    googleMapsApiKey:"",
    });
 
    if (!isLoaded) return <div>Loading...</div>
