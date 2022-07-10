@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function Login({ setIsSignedup, setIsLoggedIn }) {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+export default function Login({
+  setDisplaySignupPage,
+  setIsLoggedIn,
+  setToken,
+}) {
+  const [userEmail, setUserEmail] = useState("eva.fang.wang@gmail.com");
+  const [userPassword, setUserPassword] = useState("123");
 
   const userEmailChange = (e) => {
     setUserEmail(e.target.value);
@@ -22,9 +26,9 @@ export default function Login({ setIsSignedup, setIsLoggedIn }) {
     axios
       .post("/login", user)
       .then((result) => {
-        if (result.data !== "Unauthoried user") {
+        if (result.data !== "Unauthorized user") {
           setIsLoggedIn(true);
-          console.log(result.data);
+          setToken(result.data.token);
         } else {
           alert("Unauthorized user");
         }
@@ -38,7 +42,7 @@ export default function Login({ setIsSignedup, setIsLoggedIn }) {
   };
 
   const showSignupForm = () => {
-    setIsSignedup(true);
+    setDisplaySignupPage(true);
   };
 
   return (

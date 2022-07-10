@@ -6,20 +6,26 @@ import Home from "./components/Home.jsx";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isSignedup, setIsSignedup] = useState(false);
+  const [displaySignupPage, setDisplaySignupPage] = useState(false);
+  const [token, setToken] = useState("");
 
-  console.log("signed up status: ", isSignedup);
+  console.log("signed up status: ", displaySignupPage);
   console.log("login status: ", isLoggedIn);
+  console.log("token: ", token);
 
   return (
     <div>
       <div>
-        {isLoggedIn ? (
-          <Home />
-        ) : !isSignedup ? (
-          <Login setIsSignedup={setIsSignedup} setIsLoggedIn={setIsLoggedIn} />
+        {isLoggedIn && token ? (
+          <Home token={token} />
+        ) : !displaySignupPage ? (
+          <Login
+            setDisplaySignupPage={setDisplaySignupPage}
+            setIsLoggedIn={setIsLoggedIn}
+            setToken={setToken}
+          />
         ) : (
-          <Signup setIsSignedup={setIsSignedup} />
+          <Signup setDisplaySignupPage={setDisplaySignupPage} />
         )}
       </div>
     </div>

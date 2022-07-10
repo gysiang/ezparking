@@ -26,7 +26,6 @@ class Users extends Base {
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log("hashedPassword:", hashedPassword);
       const newUser = {
         name: name,
         email: email,
@@ -48,7 +47,6 @@ class Users extends Base {
           email: req.body.email,
         },
       });
-      console.log("user", user);
 
       if (!user) {
         alert("User is not found, please sign up first!");
@@ -56,9 +54,6 @@ class Users extends Base {
       }
 
       const match = await bcrypt.compare(req.body.password, user.password);
-      console.log("match or not: ", match);
-      console.log("secret: ", process.env.JWT_SECRET);
-
       if (match) {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "8 hours",
@@ -67,31 +62,14 @@ class Users extends Base {
           token,
           user: {
             id: user.id,
-            name: user.name,
-            email: user.email,
+            // name: user.name,
+            // email: user.email,
           },
         });
       }
     } catch (error) {
       console.log("Error message: ", error);
       return res.send("Unauthoried user");
-    }
-  }
-
-  async tokenValidation(req, res) {
-    try {
-      const token = req.header("auth-token");
-      if (!token) return res.json(false);
-
-      const verified = jwt.verify(token, process.env.JTW_SECRET);
-      if (!verified) return res.json(false);
-
-      const user = await this.model.findById(verified.id);
-      if (!user) return res.json(false);
-
-      return res.json(true);
-    } catch (error) {
-      res.status(500).json({ error: error.mesage });
     }
   }
 }
