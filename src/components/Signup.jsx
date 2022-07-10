@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function Signup({ setIsSignup }) {
+export default function Signup({ setIsSignedup }) {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -28,12 +28,17 @@ export default function Signup({ setIsSignup }) {
     axios
       .post("/signup", newUser)
       .then((result) => {
-        setIsSignup(true);
+        setIsSignedup("");
         console.log(result.data);
+        alert("user registered, please log in now!");
       })
       .catch((error) => {
         console.log("Error message: ", error);
       });
+
+    setUserName("");
+    setUserEmail("");
+    setUserPassword("");
   };
 
   return (

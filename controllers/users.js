@@ -48,14 +48,19 @@ class Users extends Base {
           email: req.body.email,
         },
       });
+      console.log("user", user);
 
       if (!user) {
         alert("User is not found, please sign up first!");
         return res.status(400).send("User is not found!");
       }
 
-      if (await bcrypt.compare(req.body.passord, user.password)) {
-        const token = jwt.sign({ id: user.id }, process.env.JTW_SECRET, {
+      const match = await bcrypt.compare(req.body.password, user.password);
+      console.log("match or not: ", match);
+      console.log("secret: ", process.env.JWT_SECRET);
+
+      if (match) {
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "8 hours",
         });
         res.json({

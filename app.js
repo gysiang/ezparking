@@ -9,8 +9,6 @@ const { resolve } = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const jwt = require("jsonwebtoken");
-
 // Initialise Express instance
 const app = express();
 // Set the Express view engine to expect EJS templates
