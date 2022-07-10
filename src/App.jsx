@@ -9,10 +9,6 @@ export default function App() {
   const [displaySignupPage, setDisplaySignupPage] = useState(false);
   const [token, setToken] = useState("");
 
-  console.log("signed up status: ", displaySignupPage);
-  console.log("login status: ", isLoggedIn);
-  console.log("token: ", token);
-
   return (
     <div>
       <div>
