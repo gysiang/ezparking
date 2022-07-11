@@ -4,9 +4,8 @@ import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
-import svgCoverter from './svy21.js'
+import proj4 from 'proj4'
 
-// console.log(process.env.DB_DEV_NAME)
 
 import allCarparks from '../carparks-all.json'
 
@@ -29,14 +28,18 @@ const filteredList = getCarparks(Result);
 
 const MarkersList = filteredList.map((locationPin,index) => {
 
-let cv = new svgCoverter();
-let north = (locationPin.geometries[0].coordinates.split(',')[0]);
-let east = (locationPin.geometries[0].coordinates.split(',')[1]);
-var resultLatLon = cv.computeLatLon(north, east);
+// let cv = new svgCoverter();
+let north = parseFloat(locationPin.geometries[0].coordinates.split(',')[0]);
+let east = parseFloat(locationPin.geometries[0].coordinates.split(',')[1]);
+// var resultLatLon = cv.computeLatLon(north, east);
+
+proj4.defs("EPSG:3414","+proj=tmerc +lat_0=1.366666666666667 +lon_0=103.8333333333333 +k=1 +x_0=28001.642 +y_0=38744.572 +ellps=WGS84 +units=m +no_defs");
+var coords = proj4("EPSG:3414").inverse([north,east]);
+// console.log(coords)
 
 let position = {
-  lat:resultLatLon.lat,
-  lng:resultLatLon.lon,
+  lat:coords[1],
+  lng:coords[0],
 }
 console.log(position)
 
