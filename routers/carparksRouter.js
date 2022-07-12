@@ -8,11 +8,17 @@ class CarparksRouter {
     this.controller = controller;
   }
   router() {
-    router.get(
-      "/homepage",
-      auth,
-      this.controller.showHomepage.bind(this.controller)
-    );
+    router
+      .get(
+        "/homepage",
+        auth,
+        this.controller.showHomepage.bind(this.controller)
+      )
+      .get(
+        "/getCarparks",
+        auth,
+        this.controller.getCarparksInfo.bind(this.controller)
+      );
 
     return router;
   }
