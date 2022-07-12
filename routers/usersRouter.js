@@ -13,12 +13,7 @@ class UsersRouter {
         res.sendFile(resolve("dist", "main.html"));
       })
       .post("/signup", this.controller.signupUser.bind(this.controller))
-      .post("/login", this.controller.loginUser.bind(this.controller))
-      .post(
-        "/tokenValidation",
-        this.controller.tokenValidation.bind(this.controller)
-      );
-    // router.get("/logout", this.controller.logoutUser.bind(this.controller));
+      .post("/login", this.controller.loginUser.bind(this.controller));
     return router;
   }
 }
