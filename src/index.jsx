@@ -1,10 +1,9 @@
-import React from 'react';
-import { render } from 'react-dom';
-import './styles.scss';
-import {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
+import React from "react";
+// import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
+import "./styles.scss";
 
-import App from './App.jsx';
+import App from "./App.jsx";
 
 // create an element that React will render stuff into
 const rootElement = document.createElement("div");
