@@ -20,12 +20,26 @@ class Carparks extends Base {
 
   async getCarparksInfo(req, res) {
     try {
+      const getToken = await axios.get(
+        `https://www.ura.gov.sg/uraDataService/getTokenForm?txtAcessKey=${process.env.URA_ACCESS_KEY}`
+      );
+      let result = getToken.data.trim().split(/\s+/);
+      let tokenStr = result.filter((el) => el.includes("value"));
+      console.log(tokenStr[0].length);
+      let idxArr = [];
+      for (let i = 0; i < tokenStr[0].length; i += 1) {
+        if (tokenStr[0][i] === '"') {
+          idxArr.push(i);
+        }
+      }
+      let URA_TOKEN = tokenStr[0].slice(idxArr[0] + 1, idxArr[1]);
+
       const getCarparksData = await axios.get(
         "https://www.ura.gov.sg/uraDataService/invokeUraDS?service=Car_Park_Availability",
         {
           headers: {
             AccessKey: process.env.URA_ACCESS_KEY,
-            Token: process.env.URA_TOKEN,
+            Token: URA_TOKEN,
           },
         }
       );
