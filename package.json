@@ -31,6 +31,7 @@
     "method-override": "^3.0.0",
     "nodemon": "^2.0.19",
     "pg": "^8.7.3",
+    "proj4": "^2.8.0",
     "regenerator-runtime": "^0.13.9",
     "sequelize": "^6.21.2"
   },
