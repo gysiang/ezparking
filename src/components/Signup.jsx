@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function Signup({ setIsSignup }) {
+export default function Signup({ setDisplaySignupPage }) {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -28,12 +28,21 @@ export default function Signup({ setIsSignup }) {
     axios
       .post("/signup", newUser)
       .then((result) => {
-        setIsSignup(true);
+        setDisplaySignupPage(false);
         console.log(result.data);
+        alert("user registered, please log in now!");
       })
       .catch((error) => {
         console.log("Error message: ", error);
       });
+
+    setUserName("");
+    setUserEmail("");
+    setUserPassword("");
+  };
+
+  const handleSignin = () => {
+    setDisplaySignupPage(false);
   };
 
   return (
@@ -54,13 +63,16 @@ export default function Signup({ setIsSignup }) {
         placeholder="Email"
       />
       <input
-        type="text"
+        type="password"
         value={userPassword}
         onChange={userPasswordChange}
         placeholder="Password"
       />
       <button type="button" onClick={handleSignup}>
         SIGN UP
+      </button>
+      <button type="button" onClick={handleSignin}>
+        SIGN IN
       </button>
     </div>
   );
