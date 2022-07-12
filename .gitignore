@@ -9,3 +9,5 @@ dist
 
 # Do not commit env folder
 .env
+
+.env local

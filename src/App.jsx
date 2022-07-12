@@ -1,28 +1,10 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
+import React, { useState, useEffect, useMemo} from "react";
 import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import Home from "./components/Home.jsx";
 
-function MapContainer () {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey:PUBLIC_GOOGLE_MAPS_API_KEY,
-   });
-
-   if (!isLoaded) return <div>Loading...</div>
-   return <Map/>
-}
-function Map() {
-  return (
-    <GoogleMap 
-    zoom={20}
-    center={{lat:1.3919935522366003,lng:103.89492287401924}}
-    mapContainerClassName="map-container">
-    <Marker position={{lat:1.3919935522366003,lng:103.89492287401924}}/>
-    </GoogleMap>
-  )
-}
+import MapContainer from "./components/Maps/MapContainer.jsx";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -48,6 +30,7 @@ export default function App() {
           <Signup setDisplaySignupPage={setDisplaySignupPage} />
         )}
       </div>
+      <br/>
       <MapContainer />
     </div>
   );
