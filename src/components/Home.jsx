@@ -59,9 +59,6 @@ export default function Home({ token, currentUserId }) {
   const ShowFavoriateCarparks = () => {
     axios
       .get("/favoriteCarparks", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
         userId: 2,
       })
       .then((result) => {

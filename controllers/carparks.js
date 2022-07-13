@@ -44,6 +44,20 @@ class Carparks extends Base {
         }
       );
       const data = getCarparksData.data.Result;
+      console.log("carpark info: ", data);
+
+      data.map(async (carpark) => {
+        const existingC = await this.model.findOne({
+          where: {
+            carparkNo: carpark.carparkNo,
+          },
+        });
+        console.log(existingC);
+        if (!existingC) {
+          await this.model.create({ carparkNo: carpark.carparkNo });
+        }
+      });
+
       return res.json({
         value: "carpark data received!",
         carparks: data,
