@@ -4,7 +4,7 @@ import AllCarparks from '../../../carparks-all.json'
 
 const {Result} = AllCarparks
 
-// work in progress
+// work in progress get data from backend and get all the info in one obj
 
 export default async function getUserFavouriteCarpark () {
 
@@ -12,7 +12,7 @@ export default async function getUserFavouriteCarpark () {
   const userCarpark = await axios.get("/favouriteCarpark");
   const data = [];
   //compare the carpark code and get info from carparks.all
-  const newList = Result.map((item) => {
+  Result.map((item) => {
   let variable = userCarpark.find(elem => {
      return elem.carparkNo === item.ppCode;
   })

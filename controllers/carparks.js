@@ -1,6 +1,7 @@
 const Base = require("./base");
 const auth = require("../middleware/auth");
 const axios = require("axios");
+const db = require("../models");
 
 class Carparks extends Base {
   constructor(model) {
@@ -35,7 +36,6 @@ class Carparks extends Base {
       );
       let result = getToken.data.trim().split(/\s+/);
       let tokenStr = result.filter((el) => el.includes("value"));
-      console.log(tokenStr[0].length);
       let idxArr = [];
       for (let i = 0; i < tokenStr[0].length; i += 1) {
         if (tokenStr[0][i] === '"') {
@@ -58,6 +58,18 @@ class Carparks extends Base {
         value: "carpark data received!",
         carparks: data,
       });
+    } catch (error) {
+      res.status(500).json({ error: error.mesage });
+    }
+  }
+
+  async addCarpark(req, res) {
+    const { userId, carparkId } = req.body;
+    try {
+      const carpark = await this.model.findByPk(carparkId);
+      const user = await db.User.findByPk(userId);
+      await carpark.addUser(user);
+      res.json("added favoriate carpark");
     } catch (error) {
       res.status(500).json({ error: error.mesage });
     }

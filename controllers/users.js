@@ -1,7 +1,6 @@
 const Base = require("./base");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const auth = require("../middleware/auth");
 
 class Users extends Base {
   constructor(model) {
@@ -56,7 +55,7 @@ class Users extends Base {
       const match = await bcrypt.compare(req.body.password, user.password);
       if (match) {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-          expiresIn: "8 hours",
+          expiresIn: "24 hours",
         });
         res.json({
           token,
