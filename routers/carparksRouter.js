@@ -18,7 +18,8 @@ class CarparksRouter {
         "/getCarparks",
         auth,
         this.controller.getCarparksInfo.bind(this.controller)
-      );
+      )
+      .post("/addCarpark", this.controller.addCarpark.bind(this.controller));
 
     return router;
   }
