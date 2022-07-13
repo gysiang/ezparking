@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect, useMemo} from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import Home from "./components/Home.jsx";
@@ -26,7 +26,7 @@ export default function App() {
           <Signup setDisplaySignupPage={setDisplaySignupPage} />
         )}
       </div>
-      <br/>
+      <br />
       <MapContainer />
     </div>
   );
