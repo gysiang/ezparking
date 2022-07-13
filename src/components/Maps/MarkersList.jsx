@@ -1,35 +1,42 @@
 import React from "react";
-import { Marker } from '@react-google-maps/api'
+import { Marker, InfoWindow, MarkerClusterer } from '@react-google-maps/api'
 import proj4 from 'proj4'
 import  filteredList  from './FilteredList.jsx'
 
 export const MarkersList = filteredList.map((locationPin,index) => {
 
-let north = parseFloat(locationPin.geometries[0].coordinates.split(',')[0]);
-let east = parseFloat(locationPin.geometries[0].coordinates.split(',')[1]);
-// var resultLatLon = cv.computeLatLon(north, east);
+const markerLoadHandler = (marker, place) => {
+    return setMarkerMap(prevState => {
+      return { ...prevState, [place.id]: marker };
+    });
+  };
 
-proj4.defs("EPSG:3414","+proj=tmerc +lat_0=1.366666666666667 +lon_0=103.8333333333333 +k=1 +x_0=28001.642 +y_0=38744.572 +ellps=WGS84 +units=m +no_defs");
-var coords = proj4("EPSG:3414").inverse([north,east]);
-// console.log(coords)
+const markerClickHandler = (event, place) => {
+    // Remember which place was clicked
+    setSelectedPlace(place);
 
-let position = {
-  lat:coords[1],
-  lng:coords[0],
-}
-// const placeData = {
-//   data: locationPin,
-//   pos: position,
-// }
-// myPlaces.push(placeData);
+    // Required so clicking a 2nd marker works as expected
+    if (infoOpen) {
+      setInfoOpen(false);
+    }
 
+    setInfoOpen(true);
 
-  if (index <50){
+    // If you want to zoom in a little on marker click
+    if (zoom < 13) {
+      setZoom(13);
+    }
+
+    // if you want to center the selected Marker
+    //setCenter(place.pos)
+  };
+
     return (
-      <li key={locationPin.ppCode}>
-        <Marker position={position}/>
-      </li>
+        <Marker 
+        key={locationPin.ppCode}
+        clusterer={clusterer}
+        onLoad={marker => markerLoadHandler(marker, place)}
+        onClick={event => markerClickHandler(event, place)}
+        position={locationPin.position}/>
     )
-  }
-  return <></>;
 });

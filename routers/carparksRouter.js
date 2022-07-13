@@ -15,6 +15,10 @@ class CarparksRouter {
         this.controller.showHomepage.bind(this.controller)
       )
       .get(
+        "/apiKey",
+        this.controller.getGoogleApiKey.bind(this.controller)
+      )
+      .get(
         "/getCarparks",
         auth,
         this.controller.getCarparksInfo.bind(this.controller)
