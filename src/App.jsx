@@ -11,22 +11,6 @@ export default function App() {
   const [displaySignupPage, setDisplaySignupPage] = useState(false);
   const [token, setToken] = useState("");
 
-  const addCarpark = () => {
-    // Need to replace below hardcoded value with variable name: @{userId} and @{carparkId}
-    const userCarparkInfo = {
-      userId: 2,
-      carparkId: 1,
-    };
-    axios
-      .post("/addCarpark", userCarparkInfo)
-      .then((result) => {
-        console.log(result.data);
-      })
-      .catch((error) => {
-        console.log("Error message: ", error);
-      });
-  };
-
   return (
     <div>
       <div>
@@ -44,7 +28,6 @@ export default function App() {
       </div>
       <br />
       <MapContainer />
-      <button onClick={addCarpark}>Add Carpark to Favoriate</button>
     </div>
   );
 }

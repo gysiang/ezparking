@@ -40,10 +40,27 @@ export default function Home({ token }) {
       });
   };
 
+  const addCarpark = () => {
+    // Need to replace below hardcoded value with variable name: @{userId} and @{carparkId}
+    const userCarparkInfo = {
+      userId: 2,
+      carparkId: 1,
+    };
+    axios
+      .post("/addCarpark", userCarparkInfo)
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((error) => {
+        console.log("Error message: ", error);
+      });
+  };
+
   return (
     <div>
       <h1>Home page</h1>
       <p>{map}</p>
+      <button onClick={addCarpark}>Add Carpark to Favoriate</button>
     </div>
   );
 }
