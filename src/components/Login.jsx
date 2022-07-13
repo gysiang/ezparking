@@ -4,7 +4,6 @@ import axios from "axios";
 export default function Login({
   setDisplaySignupPage,
   setIsLoggedIn,
-  setToken,
   setCurrentUserId,
 }) {
   const [userEmail, setUserEmail] = useState("eva.fang.wang@gmail.com");
@@ -29,7 +28,6 @@ export default function Login({
       .then((result) => {
         if (result.data !== "Unauthorized user") {
           setIsLoggedIn(true);
-          setToken(result.data.token);
           setCurrentUserId(result.data.user.id);
         } else {
           alert("Unauthorized user");

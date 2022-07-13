@@ -5,7 +5,7 @@ import Login from "./components/Login.jsx";
 import Home from "./components/Home.jsx";
 
 import MapContainer from "./components/Maps/MapContainer.jsx";
-import { async } from "regenerator-runtime";
+import { result } from "lodash";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,16 +13,31 @@ export default function App() {
   const [token, setToken] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);
 
+  useEffect(() => {
+    isUserLoggedIn();
+  }, []);
+
+  const isUserLoggedIn = () => {
+    axios
+      .get("/currentUser")
+      .then((result) => {
+        console.log(result.data.isLoggedIn);
+        setIsLoggedIn(result.data.isLoggedIn);
+      })
+      .catch((error) => {
+        console.log("Error message: ", error);
+      });
+  };
+
   return (
     <div>
       <div>
-        {isLoggedIn && token ? (
+        {isLoggedIn ? (
           <Home token={token} currentUserId={currentUserId} />
         ) : !displaySignupPage ? (
           <Login
             setDisplaySignupPage={setDisplaySignupPage}
             setIsLoggedIn={setIsLoggedIn}
-            setToken={setToken}
             setCurrentUserId={setCurrentUserId}
           />
         ) : (

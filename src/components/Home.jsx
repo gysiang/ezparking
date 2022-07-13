@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function Home({ token, currentUserId }) {
   const [map, setMap] = useState();
+  const [favCarparks, setFavCarparks] = useState([]);
 
   useEffect(() => {
     fetchProtectedDate();
@@ -56,18 +57,23 @@ export default function Home({ token, currentUserId }) {
       });
   };
 
-  const ShowFavoriateCarparks = () => {
+  const getFavoriateCarparks = () => {
     axios
       .get("/favoriteCarparks", {
         userId: 2,
       })
       .then((result) => {
         console.log(result.data);
+        setFavCarparks(result.data);
       })
       .catch((error) => {
         console.log("Unable to fetch carpark info: ", error);
       });
   };
+
+  useEffect(() => {
+    getFavoriateCarparks();
+  }, [favCarparks]);
 
   return (
     <div>
@@ -76,7 +82,7 @@ export default function Home({ token, currentUserId }) {
       <button onClick={addCarpark}>Add Carpark to Favoriate</button>
       <div>
         <h5>My Favouriate Carparks</h5>
-        <ShowFavoriateCarparks />
+        {favCarparks.map}
       </div>
     </div>
   );

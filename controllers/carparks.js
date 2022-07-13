@@ -44,15 +44,12 @@ class Carparks extends Base {
         }
       );
       const data = getCarparksData.data.Result;
-      console.log("carpark info: ", data);
-
       data.map(async (carpark) => {
         const existingC = await this.model.findOne({
           where: {
             carparkNo: carpark.carparkNo,
           },
         });
-        console.log(existingC);
         if (!existingC) {
           await this.model.create({ carparkNo: carpark.carparkNo });
         }
@@ -80,14 +77,10 @@ class Carparks extends Base {
   }
 
   async getFavoriteCarparks(req, res) {
+    const { userId } = req.body;
+    console.log(userId);
     try {
-      const { userId } = req.body;
-      console.log(userId);
-      const favoriateCarparks = await this.model.getUserCarparks({
-        where: {
-          userId: userId,
-        },
-      });
+      const favoriateCarparks = await this.model.getUserCarparks();
       console.log(favoriateCarparks);
     } catch (error) {
       res.status(500).json({ error: error.mesage });

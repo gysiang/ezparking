@@ -13,7 +13,11 @@ class UsersRouter {
         res.sendFile(resolve("dist", "main.html"));
       })
       .post("/signup", this.controller.signupUser.bind(this.controller))
-      .post("/login", this.controller.loginUser.bind(this.controller));
+      .post("/login", this.controller.loginUser.bind(this.controller))
+      .get(
+        "/currentUser",
+        this.controller.getCurrentUser.bind(this.controller)
+      );
     return router;
   }
 }
