@@ -8,11 +8,21 @@ class CarparksRouter {
     this.controller = controller;
   }
   router() {
-    router.get(
-      "/homepage",
-      auth,
-      this.controller.showHomepage.bind(this.controller)
-    );
+    router
+      .get(
+        "/homepage",
+        auth,
+        this.controller.showHomepage.bind(this.controller)
+      )
+      .get(
+        "/apiKey",
+        this.controller.getGoogleApiKey.bind(this.controller)
+      )
+      .get(
+        "/getCarparks",
+        auth,
+        this.controller.getCarparksInfo.bind(this.controller)
+      );
 
     return router;
   }
