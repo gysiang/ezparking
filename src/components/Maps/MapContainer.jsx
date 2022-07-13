@@ -4,7 +4,7 @@ import { Map } from "./Map.jsx";
 
 export default function MapContainer () {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey:"",
+    googleMapsApiKey:"AIzaSyAhxKGUPv2ctCHLeySD-WblxcmUp0L4bRQ",
    });
 
    if (!isLoaded) return <div>Loading...</div>
