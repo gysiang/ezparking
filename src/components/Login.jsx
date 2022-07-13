@@ -5,6 +5,7 @@ export default function Login({
   setDisplaySignupPage,
   setIsLoggedIn,
   setToken,
+  setCurrentUserId,
 }) {
   const [userEmail, setUserEmail] = useState("eva.fang.wang@gmail.com");
   const [userPassword, setUserPassword] = useState("123");
@@ -29,6 +30,7 @@ export default function Login({
         if (result.data !== "Unauthorized user") {
           setIsLoggedIn(true);
           setToken(result.data.token);
+          setCurrentUserId(result.data.user.id);
         } else {
           alert("Unauthorized user");
         }

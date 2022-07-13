@@ -10,17 +10,21 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displaySignupPage, setDisplaySignupPage] = useState(false);
   const [token, setToken] = useState("");
+  const [currentUserId, setCurrentUserId] = useState(null);
+
+  console.log("current user id: ", currentUserId);
 
   return (
     <div>
       <div>
         {isLoggedIn && token ? (
-          <Home token={token} />
+          <Home token={token} currentUserId={currentUserId} />
         ) : !displaySignupPage ? (
           <Login
             setDisplaySignupPage={setDisplaySignupPage}
             setIsLoggedIn={setIsLoggedIn}
             setToken={setToken}
+            setCurrentUserId={setCurrentUserId}
           />
         ) : (
           <Signup setDisplaySignupPage={setDisplaySignupPage} />

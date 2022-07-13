@@ -64,6 +64,21 @@ class Carparks extends Base {
       res.status(500).json({ error: error.mesage });
     }
   }
+
+  async getFavoriteCarparks(req, res) {
+    try {
+      const { userId } = req.body;
+      console.log(userId);
+      const favoriateCarparks = await this.model.getUserCarparks({
+        where: {
+          userId: userId,
+        },
+      });
+      console.log(favoriateCarparks);
+    } catch (error) {
+      res.status(500).json({ error: error.mesage });
+    }
+  }
 }
 
 module.exports = Carparks;
