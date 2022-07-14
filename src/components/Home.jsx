@@ -96,7 +96,9 @@ export default function Home({ token, currentUserId, apiKey }) {
         <h5>My Favouriate Carparks</h5>
         <ul>
           {favCarparks.map((carpark, idx) => (
-            <li key={String(idx)}>{carpark.carparkNo}</li>
+            <li key={String(idx)}>
+              <a href="">{carpark.carparkName}</a>
+            </li>
           ))}
         </ul>
       </div>
