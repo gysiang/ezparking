@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import { async } from "regenerator-runtime";
-import MapContainer from "./Maps/MapContainer.jsx"
+import MapContainer from "./Maps/MapContainer.jsx";
 import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 
-export default function Home({ token, currentUserId,apiKey }) {
+export default function Home({ token, currentUserId, apiKey }) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
-
-  console.log(favCarparks);
 
   useEffect(() => {
     fetchProtectedDate();
@@ -65,7 +63,6 @@ export default function Home({ token, currentUserId,apiKey }) {
     const user = {
       userId: currentUserId,
     };
-    console.log("user: ", user);
     axios
       .get("/favoriteCarparks", user)
       .then((result) => {
@@ -87,8 +84,8 @@ export default function Home({ token, currentUserId,apiKey }) {
       <p>{map}</p>
       <button onClick={addCarpark}>Add Carpark to Favoriate</button>
       <div>
-        <MapContainer apiKey={apiKey}/>
-         <GetUserGeolocation />
+        <MapContainer apiKey={apiKey} />
+        <GetUserGeolocation />
       </div>
       <div>
         <h5>My Favouriate Carparks</h5>

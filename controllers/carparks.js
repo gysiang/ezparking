@@ -43,7 +43,14 @@ class Carparks extends Base {
         }
       }
       let URA_TOKEN = tokenStr[0].slice(idxArr[0] + 1, idxArr[1]);
+      const Headers = {
+        headers: {
+          AccessKey: process.env.URA_ACCESS_KEY,
+          Token: URA_TOKEN,
+        },
+      };
 
+      // Fetch available carpark info:
       const getCarparksData = await axios.get(
         "https://www.ura.gov.sg/uraDataService/invokeUraDS?service=Car_Park_Availability",
         {
@@ -53,21 +60,40 @@ class Carparks extends Base {
           },
         }
       );
-      const data = getCarparksData.data.Result;
-      data.map(async (carpark) => {
+      const availableCarparksdata = getCarparksData.data.Result;
+
+      // Fetch carpark details:
+      const getCarparksDetails = await axios.get(
+        "https://www.ura.gov.sg/uraDataService/invokeUraDS?service=Car_Park_Details",
+        Headers
+      );
+
+      // console.log(getCarparksDetails.data.Result);
+      const carparkDetails = getCarparksDetails.data.Result;
+
+      availableCarparksdata.map(async (carpark) => {
+        console.log("carpark no: ", carpark.carparkNo);
+        const carparkInfo = {};
+        carparkDetails.filter((c) => {
+          if (c.ppCode === carpark.carparkNo) {
+            carparkInfo.carparkNo = carpark.carparkNo;
+            carparkInfo.carparkName = c.ppName;
+          }
+        });
+        console.log("carpark info: ", carparkInfo);
         const existingC = await this.model.findOne({
           where: {
             carparkNo: carpark.carparkNo,
           },
         });
         if (!existingC) {
-          await this.model.create({ carparkNo: carpark.carparkNo });
+          await this.model.create(carparkInfo);
         }
       });
 
       return res.json({
         value: "carpark data received!",
-        carparks: data,
+        carparks: availableCarparksdata,
       });
     } catch (error) {
       res.status(500).json({ error: error.mesage });
@@ -94,7 +120,7 @@ class Carparks extends Base {
       const favoriteCarparks = await user.getCarparks({
         through: "user_carparks",
       });
-      console.log("current user's fav carparks: ", favoriteCarparks);
+      // console.log("current user's fav carparks: ", favoriteCarparks);
       res.json({ favoriteCarparks });
     } catch (error) {
       res.status(500).json({ error: error.mesage });

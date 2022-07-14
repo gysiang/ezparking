@@ -10,12 +10,10 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displaySignupPage, setDisplaySignupPage] = useState(false);
   const [token, setToken] = useState("");
-  const [apiKey, setapiKey]=useState("");
+  const [apiKey, setapiKey] = useState("");
 
   const [currentUserId, setCurrentUserId] = useState(null);
 
-  console.log("user id from app(): ", currentUserId);
-  console.log(apiKey)
   useEffect(() => {
     isUserLoggedIn();
   }, []);
@@ -24,7 +22,6 @@ export default function App() {
     axios
       .get("/currentUser")
       .then((result) => {
-        console.log(result.data.isLoggedIn);
         setIsLoggedIn(result.data.isLoggedIn);
         setCurrentUserId(result.data.userId);
         setapiKey(result.data.APIKEY);
