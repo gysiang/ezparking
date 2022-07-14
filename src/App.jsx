@@ -4,8 +4,6 @@ import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import Home from "./components/Home.jsx";
 
-import MapContainer from "./components/Maps/MapContainer.jsx";
-import GetUserGeolocation from "./components/Maps/UserGeoLocation.jsx";
 import { result } from "lodash";
 
 export default function App() {
@@ -17,7 +15,7 @@ export default function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
 
   console.log("user id from app(): ", currentUserId);
-
+  console.log(apiKey)
   useEffect(() => {
     isUserLoggedIn();
   }, []);
@@ -40,7 +38,7 @@ export default function App() {
     <div>
       <div>
         {isLoggedIn ? (
-          <Home token={token} currentUserId={currentUserId} />
+          <Home token={token} currentUserId={currentUserId} apiKey={apiKey} />
         ) : !displaySignupPage ? (
           <Login
             setDisplaySignupPage={setDisplaySignupPage}
@@ -52,8 +50,6 @@ export default function App() {
         )}
       </div>
       <br />
-      <MapContainer apiKEY={apiKEY}/>
-      <GetUserGeolocation />
     </div>
   );
 }

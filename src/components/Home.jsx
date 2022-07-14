@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import { async } from "regenerator-runtime";
+import MapContainer from "./Maps/MapContainer.jsx"
+import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 
-export default function Home({ token, currentUserId }) {
+export default function Home({ token, currentUserId,apiKey }) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
 
@@ -84,6 +86,10 @@ export default function Home({ token, currentUserId }) {
       <h1>Home page</h1>
       <p>{map}</p>
       <button onClick={addCarpark}>Add Carpark to Favoriate</button>
+      <div>
+        <MapContainer apiKey={apiKey}/>
+         <GetUserGeolocation />
+      </div>
       <div>
         <h5>My Favouriate Carparks</h5>
         <ul>
