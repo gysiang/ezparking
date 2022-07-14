@@ -57,12 +57,13 @@ class Users extends Base {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "24 hours",
         });
+        res.cookie("plopplop", token, { httpOnly: true });
+        res.cookie("userId", user.id, { httpOnly: true });
         res.json({
-          token,
           user: {
             id: user.id,
-            // name: user.name,
-            // email: user.email,
+            name: user.name,
+            email: user.email,
           },
         });
       }
@@ -70,6 +71,17 @@ class Users extends Base {
       console.log("Error message: ", error);
       return res.send("Unauthorized user");
     }
+  }
+
+  getCurrentUser(req, res) {
+    const token = req.cookies.plopplop;
+    const userId = req.cookies.userId;
+    if (token) {
+      res.json({ isLoggedIn: true, userId: userId });
+    } else {
+      res.json({ isLoggedIn: false });
+    }
+    return;
   }
 }
 

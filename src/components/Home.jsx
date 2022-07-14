@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import { async } from "regenerator-runtime";
 
-export default function Home({ token }) {
+export default function Home({ token, currentUserId }) {
   const [map, setMap] = useState();
+  const [favCarparks, setFavCarparks] = useState([]);
+
+  console.log(favCarparks);
 
   useEffect(() => {
     fetchProtectedDate();
@@ -43,7 +46,7 @@ export default function Home({ token }) {
   const addCarpark = () => {
     // Need to replace below hardcoded value with variable name: @{userId} and @{carparkId}
     const userCarparkInfo = {
-      userId: 2,
+      userId: currentUserId,
       carparkId: 1,
     };
     axios
@@ -56,11 +59,39 @@ export default function Home({ token }) {
       });
   };
 
+  const getFavoriateCarparks = () => {
+    const user = {
+      userId: currentUserId,
+    };
+    console.log("user: ", user);
+    axios
+      .get("/favoriteCarparks", user)
+      .then((result) => {
+        console.log(result.data);
+        setFavCarparks(result.data.favoriteCarparks);
+      })
+      .catch((error) => {
+        console.log("Unable to fetch carpark info: ", error);
+      });
+  };
+
+  useEffect(() => {
+    getFavoriateCarparks();
+  }, []);
+
   return (
     <div>
       <h1>Home page</h1>
       <p>{map}</p>
       <button onClick={addCarpark}>Add Carpark to Favoriate</button>
+      <div>
+        <h5>My Favouriate Carparks</h5>
+        <ul>
+          {favCarparks.map((carpark, idx) => (
+            <li key={String(idx)}>{carpark.carparkNo}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
