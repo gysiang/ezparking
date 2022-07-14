@@ -19,16 +19,6 @@ class Carparks extends Base {
     }
   }
 
-  async getGoogleApiKey(req, res) {
-    try {
-      return res.json({
-        key: process.env.PUBLIC_GOOGLE_MAPS_API_KEY,
-      });
-    } catch (error) {
-      res.status(500).json({ error: error.mesage });
-    }
-  }
-
   async getCarparksInfo(req, res) {
     try {
       const getToken = await axios.get(
@@ -53,6 +43,7 @@ class Carparks extends Base {
           },
         }
       );
+
       const data = getCarparksData.data.Result;
       data.map(async (carpark) => {
         const existingC = await this.model.findOne({

@@ -3,17 +3,17 @@ import axios from "axios";
 // import { async } from "regenerator-runtime";
 import MapContainer from "./Maps/MapContainer.jsx"
 import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
+import FilteredList from './Maps/FilteredList.jsx'
 
 export default function Home({ token, currentUserId,apiKey }) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
+  const [mounted, setMounted] = useState(false);
+  const [lotsFromURA, setlotsFromURA] = useState();
+  const [userLocation, setuserLocation] = useState();
+  const [userZoom, setuserZoom] = useState(0);
 
-  console.log(favCarparks);
-
-  useEffect(() => {
-    fetchProtectedDate();
-    getAvailableCarparkInfo();
-  }, []);
+  // console.log('userlocation',userLocation)
 
   const fetchProtectedDate = () => {
     axios
@@ -38,7 +38,8 @@ export default function Home({ token, currentUserId,apiKey }) {
         },
       })
       .then((result) => {
-        console.log(result.data.carparks);
+        console.log('get available lots',result.data.carparks);
+        setlotsFromURA(result.data.carparks)
       })
       .catch((error) => {
         console.log("Unable to fetch carpark data: ", error);
@@ -69,26 +70,45 @@ export default function Home({ token, currentUserId,apiKey }) {
     axios
       .get("/favoriteCarparks", user)
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         setFavCarparks(result.data.favoriteCarparks);
       })
       .catch((error) => {
         console.log("Unable to fetch carpark info: ", error);
       });
   };
+  
 
   useEffect(() => {
+    fetchProtectedDate();
+    getAvailableCarparkInfo();
     getFavoriateCarparks();
   }, []);
+
+  useEffect(() => {
+    console.log('useEffect',lotsFromURA);
+    setMounted(true)
+  }, [lotsFromURA]);
+
+  useEffect(() => {
+    console.log('mounted',mounted);
+  }, [mounted]);
+
+  if (!mounted && lotsFromURA !=undefined) return (
+      <div>
+      <h1>Home page</h1>
+      <h1>Waiting for Map to Load</h1>
+    </div>
+  )
 
   return (
     <div>
       <h1>Home page</h1>
       <p>{map}</p>
-      <button onClick={addCarpark}>Add Carpark to Favoriate</button>
+      <button onClick={addCarpark}>Add Carpark to Favourite</button>
       <div>
-        <MapContainer apiKey={apiKey}/>
-         <GetUserGeolocation />
+         <MapContainer apiKey={apiKey} lotsFromURA={lotsFromURA} userLocation={userLocation} userZoom={userZoom} setMounted={setMounted}/>
+         <GetUserGeolocation setuserLocation={setuserLocation} setuserZoom={setuserZoom}/>
       </div>
       <div>
         <h5>My Favouriate Carparks</h5>
