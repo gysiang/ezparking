@@ -104,6 +104,7 @@ export function Map() {
       <div>{selectedPlace.ppCode}</div>
         <div>Available Lots: {selectedPlace.lotsAvailable}</div>
         <div>Vehicle Category:{selectedPlace.vehCat}</div>
+        <br/>
         <button 
         type="button" 
         className="btn btn-primary" 

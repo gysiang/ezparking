@@ -5,11 +5,28 @@ import Login from "./components/Login.jsx";
 import Home from "./components/Home.jsx";
 
 import MapContainer from "./components/Maps/MapContainer.jsx";
+import GetUserGeolocation from "./components/Maps/UserGeoLocation.jsx";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displaySignupPage, setDisplaySignupPage] = useState(false);
   const [token, setToken] = useState("");
+  const [apiKEY, setapiKEY] = useState("");
+
+  const getGoogleAPIKEY = () => {
+    axios
+      .get("/apiKey")
+      .then((result) => {
+        setapiKEY(result.data.key)
+      })
+      .catch((error) => {
+        console.log("Unable to fetch data: ", error);
+      });
+  };
+
+    useEffect(() => {
+    getGoogleAPIKEY();
+  }, []);
 
   return (
     <div>
@@ -27,7 +44,8 @@ export default function App() {
         )}
       </div>
       <br />
-      <MapContainer />
+      <MapContainer apiKEY={apiKEY}/>
+      <GetUserGeolocation />
     </div>
   );
 }

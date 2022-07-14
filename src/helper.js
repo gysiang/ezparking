@@ -10,4 +10,14 @@ function getCarparks(locations) {
     return uniques;
 }
 
-module.exports = getCarparks;
+function getLocation(event) {
+  if (navigator.geolocation) {
+    window.navigator.geolocation.getCurrentPosition(showPosition);
+    console.log(showPosition)
+  } else {
+    const errormessage = document.getElementById("errorMessage");
+    errormessage.textContent = "Geolocation is not supported by this browser.";
+  }
+}
+
+module.exports = {getCarparks,getLocation};
