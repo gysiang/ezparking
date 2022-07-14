@@ -4,17 +4,18 @@ import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import Home from "./components/Home.jsx";
 
-import MapContainer from "./components/Maps/MapContainer.jsx";
 import { result } from "lodash";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displaySignupPage, setDisplaySignupPage] = useState(false);
   const [token, setToken] = useState("");
+  const [apiKey, setapiKey]=useState("");
+
   const [currentUserId, setCurrentUserId] = useState(null);
 
   console.log("user id from app(): ", currentUserId);
-
+  console.log(apiKey)
   useEffect(() => {
     isUserLoggedIn();
   }, []);
@@ -26,6 +27,7 @@ export default function App() {
         console.log(result.data.isLoggedIn);
         setIsLoggedIn(result.data.isLoggedIn);
         setCurrentUserId(result.data.userId);
+        setapiKey(result.data.APIKEY);
       })
       .catch((error) => {
         console.log("Error message: ", error);
@@ -36,7 +38,7 @@ export default function App() {
     <div>
       <div>
         {isLoggedIn ? (
-          <Home token={token} currentUserId={currentUserId} />
+          <Home token={token} currentUserId={currentUserId} apiKey={apiKey} />
         ) : !displaySignupPage ? (
           <Login
             setDisplaySignupPage={setDisplaySignupPage}
@@ -48,7 +50,6 @@ export default function App() {
         )}
       </div>
       <br />
-      <MapContainer />
     </div>
   );
 }

@@ -102,8 +102,9 @@ export function Map() {
       <h4>{selectedPlace.ppName}</h4>
       <hr/>
       <div>{selectedPlace.ppCode}</div>
-        <p>Available Lots: {selectedPlace.lotsAvailable}</p>
-        <p>Vehicle Category:{selectedPlace.vehCat}</p>
+        <div>Available Lots: {selectedPlace.lotsAvailable}</div>
+        <div>Vehicle Category:{selectedPlace.vehCat}</div>
+        <br/>
         <button 
         type="button" 
         className="btn btn-primary" 
