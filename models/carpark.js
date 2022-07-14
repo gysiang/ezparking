@@ -12,6 +12,12 @@ const initCarparkModel = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.TEXT,
       },
+      carparkName: {
+        type: DataTypes.TEXT,
+      },
+      lotType: {
+        type: DataTypes.TEXT,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
