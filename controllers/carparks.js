@@ -77,11 +77,15 @@ class Carparks extends Base {
   }
 
   async getFavoriteCarparks(req, res) {
-    const { userId } = req.body;
-    console.log(userId);
+    const userId = req.cookies.userId;
+    console.log("user id: ", userId);
     try {
-      const favoriateCarparks = await this.model.getUserCarparks();
-      console.log(favoriateCarparks);
+      const user = await db.User.findByPk(userId);
+      const favoriteCarparks = await user.getCarparks({
+        through: "user_carparks",
+      });
+      console.log("current user's fav carparks: ", favoriteCarparks);
+      res.json({ favoriteCarparks });
     } catch (error) {
       res.status(500).json({ error: error.mesage });
     }

@@ -58,8 +58,8 @@ class Users extends Base {
           expiresIn: "24 hours",
         });
         res.cookie("plopplop", token, { httpOnly: true });
+        res.cookie("userId", user.id, { httpOnly: true });
         res.json({
-          //token,
           user: {
             id: user.id,
             name: user.name,
@@ -75,8 +75,9 @@ class Users extends Base {
 
   getCurrentUser(req, res) {
     const token = req.cookies.plopplop;
+    const userId = req.cookies.userId;
     if (token) {
-      res.json({ isLoggedIn: true });
+      res.json({ isLoggedIn: true, userId: userId });
     } else {
       res.json({ isLoggedIn: false });
     }

@@ -6,6 +6,8 @@ export default function Home({ token, currentUserId }) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
 
+  console.log(favCarparks);
+
   useEffect(() => {
     fetchProtectedDate();
     getAvailableCarparkInfo();
@@ -58,13 +60,15 @@ export default function Home({ token, currentUserId }) {
   };
 
   const getFavoriateCarparks = () => {
+    const user = {
+      userId: currentUserId,
+    };
+    console.log("user: ", user);
     axios
-      .get("/favoriteCarparks", {
-        userId: 2,
-      })
+      .get("/favoriteCarparks", user)
       .then((result) => {
         console.log(result.data);
-        setFavCarparks(result.data);
+        setFavCarparks(result.data.favoriteCarparks);
       })
       .catch((error) => {
         console.log("Unable to fetch carpark info: ", error);
@@ -73,7 +77,7 @@ export default function Home({ token, currentUserId }) {
 
   useEffect(() => {
     getFavoriateCarparks();
-  }, [favCarparks]);
+  }, []);
 
   return (
     <div>
@@ -82,7 +86,11 @@ export default function Home({ token, currentUserId }) {
       <button onClick={addCarpark}>Add Carpark to Favoriate</button>
       <div>
         <h5>My Favouriate Carparks</h5>
-        {favCarparks.map}
+        <ul>
+          {favCarparks.map((carpark, idx) => (
+            <li key={String(idx)}>{carpark.carparkNo}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );

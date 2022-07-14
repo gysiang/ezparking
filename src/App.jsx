@@ -13,6 +13,8 @@ export default function App() {
   const [token, setToken] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);
 
+  console.log("user id from app(): ", currentUserId);
+
   useEffect(() => {
     isUserLoggedIn();
   }, []);
@@ -23,6 +25,7 @@ export default function App() {
       .then((result) => {
         console.log(result.data.isLoggedIn);
         setIsLoggedIn(result.data.isLoggedIn);
+        setCurrentUserId(result.data.userId);
       })
       .catch((error) => {
         console.log("Error message: ", error);
