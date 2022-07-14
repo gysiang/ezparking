@@ -99,9 +99,16 @@ class Carparks extends Base {
   }
 
   async addCarpark(req, res) {
-    const { userId, carparkId } = req.body;
+    const { userId, carparkNo, lotType } = req.body;
+    console.log(req.body);
     try {
-      const carpark = await this.model.findByPk(carparkId);
+      const carpark = await this.model.findOne({
+        where: {
+          carparkNo: carparkNo,
+          lotType: lotType,
+        },
+      });
+      console.log("carpark found: ", carpark);
       const user = await db.User.findByPk(userId);
       await carpark.addUser(user);
       res.json("added favoriate carpark");
