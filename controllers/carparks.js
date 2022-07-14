@@ -54,6 +54,17 @@ class Carparks extends Base {
         }
       );
       const data = getCarparksData.data.Result;
+      data.map(async (carpark) => {
+        const existingC = await this.model.findOne({
+          where: {
+            carparkNo: carpark.carparkNo,
+          },
+        });
+        if (!existingC) {
+          await this.model.create({ carparkNo: carpark.carparkNo });
+        }
+      });
+
       return res.json({
         value: "carpark data received!",
         carparks: data,
@@ -70,6 +81,21 @@ class Carparks extends Base {
       const user = await db.User.findByPk(userId);
       await carpark.addUser(user);
       res.json("added favoriate carpark");
+    } catch (error) {
+      res.status(500).json({ error: error.mesage });
+    }
+  }
+
+  async getFavoriteCarparks(req, res) {
+    const userId = req.cookies.userId;
+    console.log("user id: ", userId);
+    try {
+      const user = await db.User.findByPk(userId);
+      const favoriteCarparks = await user.getCarparks({
+        through: "user_carparks",
+      });
+      console.log("current user's fav carparks: ", favoriteCarparks);
+      res.json({ favoriteCarparks });
     } catch (error) {
       res.status(500).json({ error: error.mesage });
     }
