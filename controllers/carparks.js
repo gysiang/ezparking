@@ -67,26 +67,24 @@ class Carparks extends Base {
         "https://www.ura.gov.sg/uraDataService/invokeUraDS?service=Car_Park_Details",
         Headers
       );
-
-      // console.log(getCarparksDetails.data.Result);
       const carparkDetails = getCarparksDetails.data.Result;
 
       availableCarparksdata.map(async (carpark) => {
-        console.log("carpark no: ", carpark.carparkNo);
         const carparkInfo = {};
         carparkDetails.filter((c) => {
           if (c.ppCode === carpark.carparkNo) {
             carparkInfo.carparkNo = carpark.carparkNo;
             carparkInfo.carparkName = c.ppName;
+            carparkInfo.lotType = carpark.lotType;
           }
         });
-        console.log("carpark info: ", carparkInfo);
-        const existingC = await this.model.findOne({
+        const existingC = await this.model.findAll({
           where: {
             carparkNo: carpark.carparkNo,
+            lotType: carpark.lotType,
           },
         });
-        if (!existingC) {
+        if (!existingC.length) {
           await this.model.create(carparkInfo);
         }
       });
