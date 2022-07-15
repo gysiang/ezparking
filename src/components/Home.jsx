@@ -3,9 +3,11 @@ import axios from "axios";
 import MapContainer from "./Maps/MapContainer.jsx";
 import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 import Navbar from "./Navbar.jsx";
+import UserProfile from "./UserProfile.jsx";
 
 export default function Home({ token, currentUserId, apiKey }) {
   const [favCarparks, setFavCarparks] = useState([]);
+  const [showUserProfile, setShowUserProfile] = useState(false);
 
   useEffect(() => {
     fetchProtectedDate();
@@ -64,26 +66,32 @@ export default function Home({ token, currentUserId, apiKey }) {
 
   return (
     <div>
-      <Navbar />
-      <h1>Home page</h1>
-      <div>
-        <MapContainer
-          apiKey={apiKey}
-          currentUserId={currentUserId}
-          token={token}
-        />
-        <GetUserGeolocation />
-      </div>
-      <div>
-        <h5>My Favouriate Carparks</h5>
-        <ul>
-          {favCarparks.map((carpark, idx) => (
-            <li key={String(idx)}>
-              <a href="">{carpark.carparkName}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {!showUserProfile ? (
+        <div>
+          <Navbar setShowUserProfile={setShowUserProfile} />
+          <h1>Home page</h1>
+          <div>
+            <MapContainer
+              apiKey={apiKey}
+              currentUserId={currentUserId}
+              token={token}
+            />
+            <GetUserGeolocation />
+          </div>
+          <div>
+            <h5>My Favouriate Carparks</h5>
+            <ul>
+              {favCarparks.map((carpark, idx) => (
+                <li key={String(idx)}>
+                  <a href="">{carpark.carparkName}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <UserProfile />
+      )}
     </div>
   );
 }
