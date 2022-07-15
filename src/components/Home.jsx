@@ -90,7 +90,7 @@ export default function Home({ token, currentUserId,apiKey }) {
     console.log('mounted',mounted);
   }, [mounted]);
 
-  if (!mounted && lotsFromURA !=undefined) return (
+  if (!mounted) return (
       <div>
       <h1>Home page</h1>
       <h1>Waiting for Map to Load</h1>
@@ -103,11 +103,11 @@ export default function Home({ token, currentUserId,apiKey }) {
       <p>{map}</p>
       <button onClick={addCarpark}>Add Carpark to Favourite</button>
       <div>
-         <MapContainer apiKey={apiKey} lotsFromURA={lotsFromURA} userLocation={userLocation} userZoom={userZoom} setMounted={setMounted}/>
+         <MapContainer apiKey={apiKey} lotsFromURA={lotsFromURA} userLocation={userLocation} userZoom={userZoom} setMounted={setMounted} token={token} currentUserId={currentUserId} mounted={mounted} />
          <GetUserGeolocation setuserLocation={setuserLocation} setuserZoom={setuserZoom}/>
       </div>
       <div>
-        <h5>My Favouriate Carparks</h5>
+        <h5>My Favourite Carparks</h5>
         <ul>
           {favCarparks.map((carpark, idx) => (
             <li key={String(idx)}>{carpark.carparkNo}</li>

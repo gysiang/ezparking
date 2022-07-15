@@ -5,14 +5,14 @@ import myPlaces from './FilteredList.jsx'
 import axios from "axios";
 
 
-export function Map({userLocation,userZoom,setMounted,lotsFromURA}) {
+export function Map({userLocation,userZoom,mounted,setMounted,lotsFromURA,currentUserId,token}) {
   const [mapRef, setMapRef] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [markerMap, setMarkerMap] = useState({});
   const [center, setCenter] = useState({ lat: 1.287953, lng: 103.851784 });
   const [zoom, setZoom] = useState(5);
   const [infoOpen, setInfoOpen] = useState(false);
-  const newList=[];
+  const [newList, setnewList] = useState([])
 
     useEffect(() => {
        setCenter(userLocation);
@@ -99,31 +99,28 @@ export function Map({userLocation,userZoom,setMounted,lotsFromURA}) {
         console.log("Error message: ", error);
       });
   }
-  if (lotsFromURA != undefined){
+  
+  if (lotsFromURA.length>0){
   const newList = myPlaces.map((item) => {
-  const data = [];
-  let variable = lotsFromURA.find(elem => {
-
+    let variable = lotsFromURA.find(elem => {
      return elem.carparkNo === item.ppCode;
   })
-  if (variable === undefined) variable = 0; 
-  else variable = Number(variable.lotsAvailable)
-  data.push({...item,lotsAvailable: variable})
-  return {
-    ...item, // will consist all the items from object2
-    // get index from object1 where the code matches
+
+    if (variable === undefined) variable = 0; 
+    else variable = Number(variable.lotsAvailable)
+    return {
+    ...item, 
     lotsAvailable: variable }
   });
-  console.log('newlist',newList)
+  setnewList(newList)
   setMounted(true)
   }
 
-    if (!newList) return (
-    <div>
-      <h1>Waiting for Map to Load</h1>
-    </div>
-  )
+  useEffect(() => {
+    console.log('newlist',newList)
+  }, [newList]);
 
+    if (mounted) {
     return (
     <GoogleMap 
     onLoad={loadHandler}
@@ -133,7 +130,7 @@ export function Map({userLocation,userZoom,setMounted,lotsFromURA}) {
 
     <MarkerClusterer>
       {clusterer =>
-      myPlaces.map(place => (
+      newList.map(place => (
       <Marker
         key={place.ppCode}
         clusterer={clusterer}
@@ -174,4 +171,5 @@ export function Map({userLocation,userZoom,setMounted,lotsFromURA}) {
     
     </GoogleMap>
   )
+  } return <></>
 }
