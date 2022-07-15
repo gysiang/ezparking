@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import { async } from "regenerator-runtime";
 import MapContainer from "./Maps/MapContainer.jsx";
 import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
+import Navbar from "./Navbar.jsx";
+import UserProfile from "./UserProfile.jsx";
 
-export default function Home({ token, currentUserId, apiKey }) {
-  // const [map, setMap] = useState();
+export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
   const [favCarparks, setFavCarparks] = useState([]);
+  const [showUserProfile, setShowUserProfile] = useState(false);
 
   useEffect(() => {
     fetchProtectedDate();
@@ -44,22 +45,6 @@ export default function Home({ token, currentUserId, apiKey }) {
       });
   };
 
-  // const addCarpark = () => {
-  //   // Need to replace below hardcoded value with variable name: @{userId} and @{carparkId}
-  //   const userCarparkInfo = {
-  //     userId: currentUserId,
-  //     carparkId: 1,
-  //   };
-  //   axios
-  //     .post("/addCarpark", userCarparkInfo)
-  //     .then((result) => {
-  //       console.log(result.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error message: ", error);
-  //     });
-  // };
-
   const getFavoriateCarparks = () => {
     const user = {
       userId: currentUserId,
@@ -81,27 +66,36 @@ export default function Home({ token, currentUserId, apiKey }) {
 
   return (
     <div>
-      <h1>Home page</h1>
-      {/* <p>{map}</p> */}
-      {/* <button onClick={addCarpark}>Add Carpark to Favoriate</button> */}
-      <div>
-        <MapContainer
-          apiKey={apiKey}
-          currentUserId={currentUserId}
-          token={token}
-        />
-        <GetUserGeolocation />
-      </div>
-      <div>
-        <h5>My Favouriate Carparks</h5>
-        <ul>
-          {favCarparks.map((carpark, idx) => (
-            <li key={String(idx)}>
-              <a href="">{carpark.carparkName}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {!showUserProfile ? (
+        <div>
+          <Navbar
+            setShowUserProfile={setShowUserProfile}
+            token={token}
+            setIsLoggedIn={setIsLoggedIn}
+          />
+          <h1>Home page</h1>
+          <div>
+            <MapContainer
+              apiKey={apiKey}
+              currentUserId={currentUserId}
+              token={token}
+            />
+            <GetUserGeolocation />
+          </div>
+          <div>
+            <h5>My Favouriate Carparks</h5>
+            <ul>
+              {favCarparks.map((carpark, idx) => (
+                <li key={String(idx)}>
+                  <a href="">{carpark.carparkName}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <UserProfile />
+      )}
     </div>
   );
 }
