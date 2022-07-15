@@ -3,7 +3,6 @@ import axios from "axios";
 // import { async } from "regenerator-runtime";
 import MapContainer from "./Maps/MapContainer.jsx"
 import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
-import FilteredList from './Maps/FilteredList.jsx'
 
 export default function Home({ token, currentUserId,apiKey }) {
   const [map, setMap] = useState();
@@ -12,8 +11,6 @@ export default function Home({ token, currentUserId,apiKey }) {
   const [lotsFromURA, setlotsFromURA] = useState();
   const [userLocation, setuserLocation] = useState();
   const [userZoom, setuserZoom] = useState(0);
-
-  // console.log('userlocation',userLocation)
 
   const fetchProtectedDate = () => {
     axios
@@ -87,7 +84,6 @@ export default function Home({ token, currentUserId,apiKey }) {
 
   useEffect(() => {
     console.log('useEffect',lotsFromURA);
-    setMounted(true)
   }, [lotsFromURA]);
 
   useEffect(() => {

@@ -1,10 +1,9 @@
-import React, {useState} from "react";
-import { useLoadScript } from '@react-google-maps/api'
+import React, { useState } from "react";
+import { useLoadScript } from "@react-google-maps/api";
 import { Map } from "./Map.jsx";
 import axios from "axios";
-import FilteredList from './FilteredList.jsx'
 
-export default function MapContainer ({apiKey, userLocation, userZoom, setMounted, lotsFromURA}) {
+export default function MapContainer ({apiKey, userLocation, userZoom, setMounted, lotsFromURA,currentUserId, token}) {
 
     const { isLoaded } = useLoadScript({
       googleMapsApiKey: apiKey
