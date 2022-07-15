@@ -3,6 +3,7 @@ import axios from "axios";
 // import { async } from "regenerator-runtime";
 import MapContainer from "./Maps/MapContainer.jsx";
 import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
+import Navbar from "./Navbar.jsx";
 
 export default function Home({ token, currentUserId, apiKey }) {
   // const [map, setMap] = useState();
@@ -81,6 +82,7 @@ export default function Home({ token, currentUserId, apiKey }) {
 
   return (
     <div>
+      <Navbar />
       <h1>Home page</h1>
       {/* <p>{map}</p> */}
       {/* <button onClick={addCarpark}>Add Carpark to Favoriate</button> */}
