@@ -1,4 +1,4 @@
-function getCarparks(locations) {
+export function getCarparks(locations) {
   let ppCode = new Set ();
   let uniques=[];
    for (let location of locations) {
@@ -10,7 +10,7 @@ function getCarparks(locations) {
     return uniques;
 }
 
-function getLocation(event) {
+export function getLocation(event) {
   if (navigator.geolocation) {
     window.navigator.geolocation.getCurrentPosition(showPosition);
     console.log(showPosition)
@@ -20,4 +20,5 @@ function getLocation(event) {
   }
 }
 
-module.exports = {getCarparks,getLocation};
+
+

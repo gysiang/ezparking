@@ -6,13 +6,19 @@ import Navbar from "./Navbar.jsx";
 import UserProfile from "./UserProfile.jsx";
 
 export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
+  const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
+  const [mounted, setMounted] = useState(false);
+  const [lotsFromURA, setlotsFromURA] = useState();
+  const [userLocation, setuserLocation] = useState();
+  const [userZoom, setuserZoom] = useState(0);
   const [showUserProfile, setShowUserProfile] = useState(false);
 
   useEffect(() => {
     fetchProtectedDate();
     getAvailableCarparkInfo();
   }, []);
+  
 
   const fetchProtectedDate = () => {
     axios
@@ -22,8 +28,7 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
         },
       })
       .then((result) => {
-        // setMap(result.data.value);
-        console.log(result.data);
+        setMap(result.data.value);
       })
       .catch((error) => {
         console.log("Error message: ", error);
@@ -38,7 +43,8 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
         },
       })
       .then((result) => {
-        console.log(result.data.carparks);
+        console.log('get available lots',result.data.carparks);
+        setlotsFromURA(result.data.carparks)
       })
       .catch((error) => {
         console.log("Unable to fetch carpark data: ", error);
@@ -49,22 +55,43 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
     const user = {
       userId: currentUserId,
     };
+    console.log("user: ", user);
     axios
       .get("/favoriteCarparks", user)
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         setFavCarparks(result.data.favoriteCarparks);
       })
       .catch((error) => {
         console.log("Unable to fetch carpark info: ", error);
       });
   };
+  
 
   useEffect(() => {
+    fetchProtectedDate();
+    getAvailableCarparkInfo();
     getFavoriateCarparks();
   }, []);
 
-  return (
+  useEffect(() => {
+    console.log('useEffect',lotsFromURA);
+    if (lotsFromURA !=undefined){
+    setMounted(true)
+    }
+  }, [lotsFromURA]);
+
+  useEffect(() => {
+    console.log('mounted',mounted);
+  }, [mounted]);
+
+  if (!mounted) return (
+      <div>
+      <h1>Home page</h1>
+      <h1>Waiting for Map to Load</h1>
+    </div>
+  ) 
+ return (
     <div>
       {!showUserProfile ? (
         <div>
@@ -75,12 +102,23 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
           />
           <h1>Home page</h1>
           <div>
+            {!mounted ? (
+                <div>
+                <h1>Waiting for Map to Load</h1>
+                </div>
+            ) :
             <MapContainer
               apiKey={apiKey}
               currentUserId={currentUserId}
               token={token}
+              mounted={mounted}
+              setMounted={setMounted}
+              lotsFromURA={lotsFromURA}
+              userLocation={userLocation}
+              userZoom={userZoom}
             />
-            <GetUserGeolocation />
+            }
+            <GetUserGeolocation setuserLocation={setuserLocation} setuserZoom={setuserZoom}  />
           </div>
           <div>
             <h5>My Favouriate Carparks</h5>

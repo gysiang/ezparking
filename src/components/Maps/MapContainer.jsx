@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { Map } from "./Map.jsx";
-import axios from "axios";
 
-export default function MapContainer({ apiKey, currentUserId, token }) {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: apiKey,
-  });
+export default function MapContainer ({apiKey, userLocation, userZoom, mounted, setMounted, lotsFromURA,currentUserId, token}) {
 
-  if (!isLoaded) return <div>Loading...</div>;
-  return <Map currentUserId={currentUserId} token={token} />;
+    const { isLoaded } = useLoadScript({
+      googleMapsApiKey: apiKey
+   });
+
+   if (!isLoaded) return <div>Loading...</div>
+   return <Map userLocation={userLocation} userZoom={userZoom} mounted={mounted} setMounted={setMounted} lotsFromURA={lotsFromURA} currentUserId={currentUserId} token={token} />
 }
