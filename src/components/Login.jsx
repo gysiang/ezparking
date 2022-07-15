@@ -46,25 +46,40 @@ export default function Login({
   };
 
   return (
-    <div className="">
-      <input
-        type="text"
-        value={userEmail}
-        onChange={userEmailChange}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={userPassword}
-        onChange={userPasswordChange}
-        placeholder="Password"
-      />
-      <button type="button" onClick={handleLogin}>
-        LOG IN
-      </button>
-      <button type="button" onClick={showSignupForm}>
-        SIGN UP
-      </button>
+    <div className="loginDiv d-flex flex-column justify-content-center align-items-center">
+      <div className="d-flex flex-column border p-2 align-items-center rounded">
+        <div className="my-1 userIcon">
+          <i className="bi bi-person-circle"></i>
+        </div>
+        <input
+          type="text"
+          value={userEmail}
+          onChange={userEmailChange}
+          placeholder="Email"
+          className="form-control my-1"
+        />
+        <input
+          type="password"
+          value={userPassword}
+          onChange={userPasswordChange}
+          placeholder="Password"
+          className="form-control my-1"
+        />
+        <button
+          type="button"
+          onClick={handleLogin}
+          className="form-control bg-info my-1"
+        >
+          LOG IN
+        </button>
+        <button
+          type="button"
+          onClick={showSignupForm}
+          className="form-control bg-primary my-1"
+        >
+          SIGN UP
+        </button>
+      </div>
     </div>
   );
 }

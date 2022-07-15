@@ -115,7 +115,6 @@ class Carparks extends Base {
       const favoriteCarparks = await user.getCarparks({
         through: "user_carparks",
       });
-      // console.log("current user's fav carparks: ", favoriteCarparks);
       res.json({ favoriteCarparks });
     } catch (error) {
       res.status(500).json({ error: error.mesage });
