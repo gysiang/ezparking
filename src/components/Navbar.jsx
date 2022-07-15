@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Navbar({ setShowUserProfile }) {
+export default function Navbar({ setShowUserProfile, token, setIsLoggedIn }) {
   return (
     <nav className="nav d-flex justify-content-between align-items-center px-3">
       <a
@@ -11,8 +11,18 @@ export default function Navbar({ setShowUserProfile }) {
       >
         Avatar
       </a>
-      <a href="" className="logoutIcon">
-        <i class="bi bi-box-arrow-right"></i>
+      <a
+        onClick={() => {
+          axios.post("/logout", {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          });
+          setIsLoggedIn(false);
+        }}
+        className="logoutIcon"
+      >
+        <i className="bi bi-box-arrow-right"></i>
       </a>
     </nav>
   );

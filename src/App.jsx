@@ -34,7 +34,12 @@ export default function App() {
   return (
     <div className="mainContainer">
       {isLoggedIn ? (
-        <Home token={token} currentUserId={currentUserId} apiKey={apiKey} />
+        <Home
+          token={token}
+          currentUserId={currentUserId}
+          apiKey={apiKey}
+          setIsLoggedIn={setIsLoggedIn}
+        />
       ) : !displaySignupPage ? (
         <Login
           setDisplaySignupPage={setDisplaySignupPage}

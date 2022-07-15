@@ -5,7 +5,7 @@ import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 import Navbar from "./Navbar.jsx";
 import UserProfile from "./UserProfile.jsx";
 
-export default function Home({ token, currentUserId, apiKey }) {
+export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
   const [favCarparks, setFavCarparks] = useState([]);
   const [showUserProfile, setShowUserProfile] = useState(false);
 
@@ -68,7 +68,11 @@ export default function Home({ token, currentUserId, apiKey }) {
     <div>
       {!showUserProfile ? (
         <div>
-          <Navbar setShowUserProfile={setShowUserProfile} />
+          <Navbar
+            setShowUserProfile={setShowUserProfile}
+            token={token}
+            setIsLoggedIn={setIsLoggedIn}
+          />
           <h1>Home page</h1>
           <div>
             <MapContainer
