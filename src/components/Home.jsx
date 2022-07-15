@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import { async } from "regenerator-runtime";
 import MapContainer from "./Maps/MapContainer.jsx";
 import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 import Navbar from "./Navbar.jsx";
 
 export default function Home({ token, currentUserId, apiKey }) {
-  // const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
 
   useEffect(() => {
@@ -45,22 +43,6 @@ export default function Home({ token, currentUserId, apiKey }) {
       });
   };
 
-  // const addCarpark = () => {
-  //   // Need to replace below hardcoded value with variable name: @{userId} and @{carparkId}
-  //   const userCarparkInfo = {
-  //     userId: currentUserId,
-  //     carparkId: 1,
-  //   };
-  //   axios
-  //     .post("/addCarpark", userCarparkInfo)
-  //     .then((result) => {
-  //       console.log(result.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error message: ", error);
-  //     });
-  // };
-
   const getFavoriateCarparks = () => {
     const user = {
       userId: currentUserId,
@@ -84,8 +66,6 @@ export default function Home({ token, currentUserId, apiKey }) {
     <div>
       <Navbar />
       <h1>Home page</h1>
-      {/* <p>{map}</p> */}
-      {/* <button onClick={addCarpark}>Add Carpark to Favoriate</button> */}
       <div>
         <MapContainer
           apiKey={apiKey}

@@ -46,8 +46,8 @@ export default function Signup({ setDisplaySignupPage }) {
   };
 
   return (
-    <div>
-      <div>
+    <div className="loginDiv d-flex flex-column justify-content-center align-items-center">
+      <div className="d-flex flex-column">
         <h5>Create account</h5>
       </div>
       <input

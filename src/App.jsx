@@ -32,21 +32,18 @@ export default function App() {
   };
 
   return (
-    <div>
-      <div>
-        {isLoggedIn ? (
-          <Home token={token} currentUserId={currentUserId} apiKey={apiKey} />
-        ) : !displaySignupPage ? (
-          <Login
-            setDisplaySignupPage={setDisplaySignupPage}
-            setIsLoggedIn={setIsLoggedIn}
-            setCurrentUserId={setCurrentUserId}
-          />
-        ) : (
-          <Signup setDisplaySignupPage={setDisplaySignupPage} />
-        )}
-      </div>
-      <br />
+    <div className="mainContainer">
+      {isLoggedIn ? (
+        <Home token={token} currentUserId={currentUserId} apiKey={apiKey} />
+      ) : !displaySignupPage ? (
+        <Login
+          setDisplaySignupPage={setDisplaySignupPage}
+          setIsLoggedIn={setIsLoggedIn}
+          setCurrentUserId={setCurrentUserId}
+        />
+      ) : (
+        <Signup setDisplaySignupPage={setDisplaySignupPage} />
+      )}
     </div>
   );
 }
