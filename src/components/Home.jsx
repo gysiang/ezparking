@@ -97,7 +97,8 @@ export default function Home({ token, currentUserId, apiKey }) {
         <ul>
           {favCarparks.map((carpark, idx) => (
             <li key={String(idx)}>
-              <a href="">{carpark.carparkName}</a>
+              {/* Need to add a href link to navigate in google map */}
+              <a href={``}>{carpark.carparkName}</a>
             </li>
           ))}
         </ul>
