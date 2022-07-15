@@ -12,7 +12,6 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
   const [lotsFromURA, setlotsFromURA] = useState();
   const [userLocation, setuserLocation] = useState();
   const [userZoom, setuserZoom] = useState(0);
-  const [favCarparks, setFavCarparks] = useState([]);
   const [showUserProfile, setShowUserProfile] = useState(false);
 
   useEffect(() => {
@@ -77,6 +76,9 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
 
   useEffect(() => {
     console.log('useEffect',lotsFromURA);
+    if (lotsFromURA !=undefined){
+    setMounted(true)
+    }
   }, [lotsFromURA]);
 
   useEffect(() => {
@@ -88,7 +90,7 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
       <h1>Home page</h1>
       <h1>Waiting for Map to Load</h1>
     </div>
-  )
+  ) 
  return (
     <div>
       {!showUserProfile ? (
@@ -100,12 +102,23 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
           />
           <h1>Home page</h1>
           <div>
+            {!mounted ? (
+                <div>
+                <h1>Waiting for Map to Load</h1>
+                </div>
+            ) :
             <MapContainer
               apiKey={apiKey}
               currentUserId={currentUserId}
               token={token}
+              mounted={mounted}
+              setMounted={setMounted}
+              lotsFromURA={lotsFromURA}
+              userLocation={userLocation}
+              userZoom={userZoom}
             />
-            <GetUserGeolocation />
+            }
+            <GetUserGeolocation setuserLocation={setuserLocation} setuserZoom={setuserZoom}  />
           </div>
           <div>
             <h5>My Favouriate Carparks</h5>

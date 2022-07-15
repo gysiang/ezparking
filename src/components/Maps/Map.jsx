@@ -1,18 +1,22 @@
-import React, {useState, useEffect} from "react";
-import { GoogleMap, Marker, InfoWindow, MarkerClusterer } from '@react-google-maps/api'
-
-import myPlaces from './FilteredList.jsx'
+import React, { useState, useEffect } from "react";
+import {
+  GoogleMap,
+  Marker,
+  InfoWindow,
+  MarkerClusterer,
+} from "@react-google-maps/api";
+import myPlaces from "./FilteredList.jsx";
 import axios from "axios";
 
-
-export function Map({userLocation,userZoom,mounted,setMounted,lotsFromURA,currentUserId,token}) {
+export function Map({userLocation,userZoom,setMounted,mounted,lotsFromURA,currentUserId, token}) {
   const [mapRef, setMapRef] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [markerMap, setMarkerMap] = useState({});
-  const [center, setCenter] = useState({ lat: 1.287953, lng: 103.851784 });
+  const [center, setCenter] = useState({ lat:1.287953 ,lng:103.851784 });
   const [zoom, setZoom] = useState(5);
   const [infoOpen, setInfoOpen] = useState(false);
-  const [newList, setnewList] = useState([])
+  const [isFiltered, setisFiltered] = useState(false);
+  const [newList, setnewList] = useState([]);
 
     useEffect(() => {
        setCenter(userLocation);
@@ -20,18 +24,18 @@ export function Map({userLocation,userZoom,mounted,setMounted,lotsFromURA,curren
    }, [userLocation])
 
 
-  // Iterate myPlaces to size, center, and zoom map to contain all markers
-  const fitBounds = (map) => {
+    // Iterate myPlaces to size, center, and zoom map to contain all markers
+  const fitBounds = map => {
     const bounds = new window.google.maps.LatLngBounds();
 
-    myPlaces.forEach((place) => {
+    myPlaces.forEach(place => {
       bounds.extend(place.position);
     });
 
     map.fitBounds(bounds);
   };
 
-  const loadHandler = (map) => {
+  const loadHandler = map => {
     // Store a reference to the google map instance in state
     setMapRef(map);
     // Fit map bounds to contain all markers
@@ -40,7 +44,7 @@ export function Map({userLocation,userZoom,mounted,setMounted,lotsFromURA,curren
 
   // We have to create a mapping of our places to actual Marker objects
   const markerLoadHandler = (marker, place) => {
-    return setMarkerMap((prevState) => {
+    return setMarkerMap(prevState => {
       return { ...prevState, [place.ppCode]: marker };
     });
   };
@@ -61,7 +65,7 @@ export function Map({userLocation,userZoom,mounted,setMounted,lotsFromURA,curren
       setZoom(13);
     }
     // if you want to center the selected Marker
-    setCenter(place.pos);
+    setCenter(place.pos)
   };
 
   function openMapsHandler(event, selectedPlace) {
@@ -99,29 +103,24 @@ export function Map({userLocation,userZoom,mounted,setMounted,lotsFromURA,curren
         console.log("Error message: ", error);
       });
   }
-  
-  if (lotsFromURA.length>0){
-  const newList = myPlaces.map((item) => {
+
+  if (mounted && (lotsFromURA!=undefined) && !isFiltered){
+    const newList = myPlaces.map((item) => {
     let variable = lotsFromURA.find(elem => {
      return elem.carparkNo === item.ppCode;
-  })
-
+    })
     if (variable === undefined) variable = 0; 
     else variable = Number(variable.lotsAvailable)
     return {
-    ...item, 
-    lotsAvailable: variable }
+    ...item, lotsAvailable: variable }
   });
+  console.log('newlist',newList)
+  setisFiltered(true)
   setnewList(newList)
-  setMounted(true)
   }
 
-  useEffect(() => {
-    console.log('newlist',newList)
-  }, [newList]);
-
-    if (mounted) {
-    return (
+  if (newList.length>0) {
+  return (
     <GoogleMap 
     onLoad={loadHandler}
     zoom={zoom}
@@ -171,5 +170,5 @@ export function Map({userLocation,userZoom,mounted,setMounted,lotsFromURA,curren
     
     </GoogleMap>
   )
-  } return <></>
+  }
 }
