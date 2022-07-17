@@ -13,6 +13,7 @@ export default function App() {
   const [apiKey, setapiKey] = useState("");
 
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     isUserLoggedIn();
@@ -45,6 +46,7 @@ export default function App() {
           setDisplaySignupPage={setDisplaySignupPage}
           setIsLoggedIn={setIsLoggedIn}
           setCurrentUserId={setCurrentUserId}
+          setUserName={setUserName}
         />
       ) : (
         <Signup setDisplaySignupPage={setDisplaySignupPage} />

@@ -90,7 +90,6 @@ class Carparks extends Base {
 
   async addCarpark(req, res) {
     const { userId, carparkNo, lotType } = req.body;
-    console.log(req.body);
     try {
       const carpark = await this.model.findOne({
         where: {
@@ -98,7 +97,6 @@ class Carparks extends Base {
           lotType: lotType,
         },
       });
-      console.log("carpark found: ", carpark);
       const user = await db.User.findByPk(userId);
       await carpark.addUser(user);
       res.json("added favoriate carpark");
@@ -109,7 +107,6 @@ class Carparks extends Base {
 
   async getFavoriteCarparks(req, res) {
     const userId = req.cookies.userId;
-    console.log("user id: ", userId);
     try {
       const user = await db.User.findByPk(userId);
       const favoriteCarparks = await user.getCarparks({
