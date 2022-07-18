@@ -57,7 +57,6 @@ class Users extends Base {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "24 hours",
         });
-        console.log(process.env.PUBLIC_GOOGLE_MAPS_API_KEY);
         res.cookie("plopplop", token, { httpOnly: true });
         res.cookie("userId", user.id, { httpOnly: true });
         res.cookie("APIKEY", process.env.PUBLIC_GOOGLE_MAPS_API_KEY);
@@ -76,11 +75,9 @@ class Users extends Base {
   }
 
   getCurrentUser(req, res) {
-    console.log("getting current user");
     const token = req.cookies.plopplop;
     const userId = req.cookies.userId;
     if (token) {
-      console.log(process.env.PUBLIC_GOOGLE_MAPS_API_KE);
       res.json({
         isLoggedIn: true,
         userId: userId,

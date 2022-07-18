@@ -5,7 +5,13 @@ import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 import Navbar from "./Navbar.jsx";
 import UserProfile from "./UserProfile.jsx";
 
-export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
+export default function Home({
+  token,
+  currentUserId,
+  apiKey,
+  setIsLoggedIn,
+  userName,
+}) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
   const [mounted, setMounted] = useState(false);
@@ -15,12 +21,11 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
   const [showUserProfile, setShowUserProfile] = useState(false);
 
   useEffect(() => {
-    fetchProtectedDate();
+    showHomepage();
     getAvailableCarparkInfo();
   }, []);
-  
 
-  const fetchProtectedDate = () => {
+  const showHomepage = () => {
     axios
       .get("/homepage", {
         headers: {
@@ -43,19 +48,18 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
         },
       })
       .then((result) => {
-        console.log('get available lots',result.data.carparks);
-        setlotsFromURA(result.data.carparks)
+        console.log("get available lots");
+        setlotsFromURA(result.data.carparks);
       })
       .catch((error) => {
         console.log("Unable to fetch carpark data: ", error);
       });
   };
 
-  const getFavoriateCarparks = () => {
+  const getFavoriteCarparks = () => {
     const user = {
       userId: currentUserId,
     };
-    console.log("user: ", user);
     axios
       .get("/favoriteCarparks", user)
       .then((result) => {
@@ -66,32 +70,31 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
         console.log("Unable to fetch carpark info: ", error);
       });
   };
-  
 
   useEffect(() => {
-    fetchProtectedDate();
+    showHomepage();
     getAvailableCarparkInfo();
-    getFavoriateCarparks();
+    getFavoriteCarparks();
   }, []);
 
   useEffect(() => {
-    console.log('useEffect',lotsFromURA);
-    if (lotsFromURA !=undefined){
-    setMounted(true)
+    if (lotsFromURA != undefined) {
+      setMounted(true);
     }
   }, [lotsFromURA]);
 
   useEffect(() => {
-    console.log('mounted',mounted);
+    console.log("mounted", mounted);
   }, [mounted]);
 
-  if (!mounted) return (
+  if (!mounted)
+    return (
       <div>
-      <h1>Home page</h1>
-      <h1>Waiting for Map to Load</h1>
-    </div>
-  ) 
- return (
+        <h1>Home page</h1>
+        <h1>Waiting for Map to Load</h1>
+      </div>
+    );
+  return (
     <div>
       {!showUserProfile ? (
         <div>
@@ -99,26 +102,30 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
             setShowUserProfile={setShowUserProfile}
             token={token}
             setIsLoggedIn={setIsLoggedIn}
+            currentUserId={currentUserId}
           />
           <h1>Home page</h1>
           <div>
             {!mounted ? (
-                <div>
+              <div>
                 <h1>Waiting for Map to Load</h1>
-                </div>
-            ) :
-            <MapContainer
-              apiKey={apiKey}
-              currentUserId={currentUserId}
-              token={token}
-              mounted={mounted}
-              setMounted={setMounted}
-              lotsFromURA={lotsFromURA}
-              userLocation={userLocation}
-              userZoom={userZoom}
+              </div>
+            ) : (
+              <MapContainer
+                apiKey={apiKey}
+                currentUserId={currentUserId}
+                token={token}
+                mounted={mounted}
+                setMounted={setMounted}
+                lotsFromURA={lotsFromURA}
+                userLocation={userLocation}
+                userZoom={userZoom}
+              />
+            )}
+            <GetUserGeolocation
+              setuserLocation={setuserLocation}
+              setuserZoom={setuserZoom}
             />
-            }
-            <GetUserGeolocation setuserLocation={setuserLocation} setuserZoom={setuserZoom}  />
           </div>
           <div>
             <h5>My Favouriate Carparks</h5>
@@ -132,7 +139,7 @@ export default function Home({ token, currentUserId, apiKey, setIsLoggedIn }) {
           </div>
         </div>
       ) : (
-        <UserProfile />
+        <UserProfile currentUserId={currentUserId} userName={userName} />
       )}
     </div>
   );
