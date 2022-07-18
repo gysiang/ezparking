@@ -85,12 +85,11 @@ export default function Home({
   if (!mounted)
     return (
       <div>
-        <h1>Home page</h1>
         <h1>Waiting for Map to Load</h1>
       </div>
     );
   return (
-    <div>
+    <div className="">
       {!showUserProfile ? (
         <div>
           <Navbar
@@ -99,8 +98,8 @@ export default function Home({
             setIsLoggedIn={setIsLoggedIn}
             currentUserId={currentUserId}
           />
-          <h1>Home page</h1>
-          <div>
+
+          <div className="mapDiv d-flex card flex-column justify-content-center align-items-center m-2">
             {!mounted ? (
               <div>
                 <h1>Waiting for Map to Load</h1>
@@ -122,8 +121,9 @@ export default function Home({
               setuserZoom={setuserZoom}
             />
           </div>
-          <div className="favCarparksDiv">
-            <h5>My Favorite Carparks</h5>
+
+          <div className="favCarparksDiv card d-flex flex-column justify-content-center align-items-center m-2">
+            <h5 className="mt-1">My Favorite Carparks</h5>
             <FavoriteCarparks favCarparks={favCarparks} />
           </div>
         </div>
