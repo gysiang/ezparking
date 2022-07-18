@@ -4,10 +4,6 @@ import axios from "axios";
 export default function UserProfile({ currentUserId, userName }) {
   const [userAvatar, setUserAvatar] = useState(null);
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
   return (
     <div>
       This is user profile page!
