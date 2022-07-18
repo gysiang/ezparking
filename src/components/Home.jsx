@@ -98,7 +98,7 @@ export default function Home({
             setIsLoggedIn={setIsLoggedIn}
             currentUserId={currentUserId}
           />
-
+          <h3 className="text-center mt-2">EZ Parking</h3>
           <div className="mapDiv d-flex card flex-column justify-content-center align-items-center m-2">
             {!mounted ? (
               <div>

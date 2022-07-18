@@ -5,7 +5,9 @@
 }
 
 body {
-  background-color: rgba(244, 244, 244, 0.429);
+  background-image: url("../public/imgs/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   margin: 0;
 }
 
