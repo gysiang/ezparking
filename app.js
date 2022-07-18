@@ -26,6 +26,7 @@ app.use(express.static("public"));
 // Expose the files stored in the distribution folder
 app.use(express.static("dist"));
 
+
 // Set up Webpack in dev env
 const env = process.env.NODE_ENV || "development";
 if (env === "development") {

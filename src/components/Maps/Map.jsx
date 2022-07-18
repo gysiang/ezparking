@@ -113,6 +113,7 @@ export function Map({userLocation,userZoom,setMounted,mounted,lotsFromURA,curren
     else variable = Number(variable.lotsAvailable)
     return {
     ...item, lotsAvailable: variable }
+
   });
   console.log('newlist',newList)
   setisFiltered(true)

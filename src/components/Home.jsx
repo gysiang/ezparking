@@ -48,7 +48,7 @@ export default function Home({
         },
       })
       .then((result) => {
-        console.log("get available lots");
+        console.log("get available lots",result.data.carparks);
         setlotsFromURA(result.data.carparks);
       })
       .catch((error) => {
@@ -87,13 +87,7 @@ export default function Home({
     console.log("mounted", mounted);
   }, [mounted]);
 
-  if (!mounted)
-    return (
-      <div>
-        <h1>Home page</h1>
-        <h1>Waiting for Map to Load</h1>
-      </div>
-    );
+
   return (
     <div>
       {!showUserProfile ? (
@@ -108,7 +102,7 @@ export default function Home({
           <div>
             {!mounted ? (
               <div>
-                <h1>Waiting for Map to Load</h1>
+                <h1 className="textCenter">Waiting for Map to Load</h1>
               </div>
             ) : (
               <MapContainer
@@ -128,7 +122,7 @@ export default function Home({
             />
           </div>
           <div>
-            <h5>My Favouriate Carparks</h5>
+            <h5>My Favourite Carparks</h5>
             <ul>
               {favCarparks.map((carpark, idx) => (
                 <li key={String(idx)}>
@@ -139,7 +133,15 @@ export default function Home({
           </div>
         </div>
       ) : (
-        <UserProfile currentUserId={currentUserId} userName={userName} />
+        <div>
+          <Navbar
+            setShowUserProfile={setShowUserProfile}
+            token={token}
+            setIsLoggedIn={setIsLoggedIn}
+            currentUserId={currentUserId}
+          />
+        <UserProfile currentUserId={currentUserId} showUserProfile={showUserProfile} setShowUserProfile={setShowUserProfile} />
+        </div>
       )}
     </div>
   );
