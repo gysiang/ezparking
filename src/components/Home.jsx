@@ -4,6 +4,7 @@ import MapContainer from "./Maps/MapContainer.jsx";
 import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 import Navbar from "./Navbar.jsx";
 import UserProfile from "./UserProfile.jsx";
+import FavoriteCarparks from "./Favourites/FavoriteCarparks.jsx";
 
 export default function Home({
   token,
@@ -19,11 +20,6 @@ export default function Home({
   const [userLocation, setuserLocation] = useState();
   const [userZoom, setuserZoom] = useState(0);
   const [showUserProfile, setShowUserProfile] = useState(false);
-
-  useEffect(() => {
-    showHomepage();
-    getAvailableCarparkInfo();
-  }, []);
 
   const showHomepage = () => {
     axios
@@ -63,7 +59,6 @@ export default function Home({
     axios
       .get("/favoriteCarparks", user)
       .then((result) => {
-        // console.log(result.data);
         setFavCarparks(result.data.favoriteCarparks);
       })
       .catch((error) => {
@@ -127,15 +122,9 @@ export default function Home({
               setuserZoom={setuserZoom}
             />
           </div>
-          <div>
-            <h5>My Favouriate Carparks</h5>
-            <ul>
-              {favCarparks.map((carpark, idx) => (
-                <li key={String(idx)}>
-                  <a href="">{carpark.carparkName}</a>
-                </li>
-              ))}
-            </ul>
+          <div className="favCarparksDiv">
+            <h5>My Favorite Carparks</h5>
+            <FavoriteCarparks favCarparks={favCarparks} />
           </div>
         </div>
       ) : (
