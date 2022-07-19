@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import GeoConverter from "../Maps/GeoConverter.jsx";
+import allCarparks from "../../../carparks-all.json";
 
 export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
   let newCarparkList = [];
@@ -13,12 +13,22 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
       let current = newCarparkList.find(
         (c) => c.carparkNo === carpark.carparkNo
       );
-      console.log("current", current);
       if (current) {
         return {
           ...carpark,
           lat: current.position.lat,
           lng: current.position.lng,
+        };
+      } else {
+        let allCarparksList = GeoConverter(allCarparks.Result);
+        console.log("all carparks: ", allCarparksList);
+        let crt = allCarparksList.find((c) => c.ppCode === carpark.carparkNo);
+        console.log("crt", crt);
+
+        return {
+          ...carpark,
+          lat: crt.position.lat,
+          lng: crt.position.lng,
         };
       }
     });
