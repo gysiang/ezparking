@@ -45,7 +45,7 @@ export default function Home({
         },
       })
       .then((result) => {
-        console.log("get available lots");
+        console.log("get available lots",result.data.carparks);
         setlotsFromURA(result.data.carparks);
         console.log("carparks: ", result.data.carparks);
         console.log("converted carparks: ", GeoConverter(result.data.carparks));
@@ -85,12 +85,6 @@ export default function Home({
     console.log("mounted", mounted);
   }, [mounted]);
 
-  if (!mounted)
-    return (
-      <div>
-        <h1>Waiting for Map to Load</h1>
-      </div>
-    );
   return (
     <div className="">
       {!showUserProfile ? (
@@ -105,7 +99,7 @@ export default function Home({
           <div className="mapDiv d-flex card flex-column justify-content-center align-items-center m-2">
             {!mounted ? (
               <div>
-                <h1>Waiting for Map to Load</h1>
+                <h1 className="textCenter">Waiting for Map to Load</h1>
               </div>
             ) : (
               <MapContainer
@@ -127,16 +121,26 @@ export default function Home({
             />
           </div>
 
+
           <div className="favCarparksDiv card d-flex flex-column justify-content-start align-items-center  m-2">
             <h5 className="mt-1 ">My Favorite Carparks</h5>
             <hr className="mb-2" />
             <div className="d-flex flex-column overflow-scroll">
               <FavoriteCarparks favCarparks={favCarparks} />
             </div>
+
           </div>
         </div>
       ) : (
-        <UserProfile currentUserId={currentUserId} userName={userName} />
+        <div>
+          <Navbar
+            setShowUserProfile={setShowUserProfile}
+            token={token}
+            setIsLoggedIn={setIsLoggedIn}
+            currentUserId={currentUserId}
+          />
+        <UserProfile currentUserId={currentUserId} showUserProfile={showUserProfile} setShowUserProfile={setShowUserProfile} />
+        </div>
       )}
       <div className="text-center copyrightDiv position-fixed bottom-0 mb-2">
         Copyright &copy; 2022 EZ Parking

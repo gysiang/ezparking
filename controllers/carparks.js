@@ -46,6 +46,7 @@ class Carparks extends Base {
         Headers
       );
       const availableCarparksdata = getCarparksData.data.Result;
+      console.log('availableCarparksdata',availableCarparksdata)
 
       // Fetch carpark details:
       const getCarparksDetails = await axios.get(
