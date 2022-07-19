@@ -5,6 +5,7 @@ import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 import Navbar from "./Navbar.jsx";
 import UserProfile from "./UserProfile.jsx";
 import FavoriteCarparks from "./Favourites/FavoriteCarparks.jsx";
+import GeoConverter from "./Maps/GeoConverter.jsx";
 
 export default function Home({
   token,
@@ -46,6 +47,8 @@ export default function Home({
       .then((result) => {
         console.log("get available lots");
         setlotsFromURA(result.data.carparks);
+        console.log("carparks: ", result.data.carparks);
+        console.log("converted carparks: ", GeoConverter(result.data.carparks));
       })
       .catch((error) => {
         console.log("Unable to fetch carpark data: ", error);
@@ -114,6 +117,8 @@ export default function Home({
                 lotsFromURA={lotsFromURA}
                 userLocation={userLocation}
                 userZoom={userZoom}
+                favCarparks={favCarparks}
+                setFavCarparks={setFavCarparks}
               />
             )}
             <GetUserGeolocation
@@ -122,14 +127,20 @@ export default function Home({
             />
           </div>
 
-          <div className="favCarparksDiv card d-flex flex-column justify-content-center align-items-center m-2">
-            <h5 className="mt-1">My Favorite Carparks</h5>
-            <FavoriteCarparks favCarparks={favCarparks} />
+          <div className="favCarparksDiv card d-flex flex-column justify-content-start align-items-center  m-2">
+            <h5 className="mt-1 ">My Favorite Carparks</h5>
+            <hr className="mb-2" />
+            <div className="d-flex flex-column overflow-scroll">
+              <FavoriteCarparks favCarparks={favCarparks} />
+            </div>
           </div>
         </div>
       ) : (
         <UserProfile currentUserId={currentUserId} userName={userName} />
       )}
+      <div className="text-center copyrightDiv position-fixed bottom-0 mb-2">
+        Copyright &copy; 2022 EZ Parking
+      </div>
     </div>
   );
 }

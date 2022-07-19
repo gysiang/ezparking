@@ -46,7 +46,21 @@ body {
   height: 50vh;
 }
 
+.favCarparksDiv {
+  height: 230px;
+}
+
 .favCarparksDiv li a {
   color: inherit;
   list-style: none;
+}
+
+hr {
+  width: 80%;
+  margin: 0;
+}
+
+.copyrightDiv {
+  color: white;
+  width: 100%;
 }

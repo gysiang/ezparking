@@ -30,8 +30,6 @@ export default function Login({
         if (result.data !== "Unauthorized user") {
           setIsLoggedIn(true);
           setCurrentUserId(result.data.user.id);
-          console.log("id: ", result.data.user.id);
-          console.log("name: ", result.data.user.name);
           setUserName(result.data.user.name);
         } else {
           alert("Unauthorized user");

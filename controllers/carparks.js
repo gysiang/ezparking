@@ -43,12 +43,7 @@ class Carparks extends Base {
       // Fetch available carpark info:
       const getCarparksData = await axios.get(
         "https://www.ura.gov.sg/uraDataService/invokeUraDS?service=Car_Park_Availability",
-        {
-          headers: {
-            AccessKey: process.env.URA_ACCESS_KEY,
-            Token: URA_TOKEN,
-          },
-        }
+        Headers
       );
       const availableCarparksdata = getCarparksData.data.Result;
 
@@ -89,8 +84,10 @@ class Carparks extends Base {
   }
 
   async addCarpark(req, res) {
-    const { userId, carparkNo, lotType } = req.body;
+    const { userId, carparkNo, lotType, carparkName } = req.body;
+    // console.log("carpark name: ", carparkName);
     try {
+      // Find carpark from DB
       const carpark = await this.model.findOne({
         where: {
           carparkNo: carparkNo,
@@ -98,8 +95,39 @@ class Carparks extends Base {
         },
       });
       const user = await db.User.findByPk(userId);
-      await carpark.addUser(user);
-      res.json("added favoriate carpark");
+
+      console.log("carpark found: ", carpark);
+      // If carpark is not in DB
+      if (!carpark) {
+        let newCarpark = {
+          carparkNo: carparkNo,
+          lotType: lotType,
+          carparkName: carparkName,
+        };
+
+        let newCP = await this.model.create(newCarpark);
+        await newCP.addUser(user);
+        console.log("new carpark:", newCP.dataValues);
+        let newFavoriteCarpark = newCP.dataValues;
+        res.json({ newFavoriteCarpark });
+        return;
+      } else {
+        // Check if user already added this carpark as favorite carpark
+        let existingUserCarpark = await carpark.getUsers({
+          through: "user_carparks",
+        });
+        console.log("existing carpark?: ", existingUserCarpark);
+        if (existingUserCarpark.length === 0) {
+          await carpark.addUser(user);
+          console.log("new fav cp: ", carpark);
+          let newFavoriteCarpark = carpark.dataValues;
+          res.json({ newFavoriteCarpark });
+          return;
+        } else {
+          res.send("Already added.");
+          return;
+        }
+      }
     } catch (error) {
       res.status(500).json({ error: error.mesage });
     }
