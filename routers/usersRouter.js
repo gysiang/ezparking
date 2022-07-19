@@ -24,7 +24,8 @@ class UsersRouter {
       .get("/currentUser", this.controller.getCurrentUser.bind(this.controller))
       .get("/currentUserProfile", this.controller.getCurrentUserProfile.bind(this.controller))
       .post("/uploadAvatar",multerUpload.single("avatar"), this.controller.uploadAvatar.bind(this.controller))
-      .post("/currentUserProfile", this.controller.editCurrentUserProfile.bind(this.controller))
+      .put("/updateUserAvatar",this.controller.updateUserAvatar.bind(this.controller))
+      .put("/currentUserProfile", this.controller.editCurrentUserProfile.bind(this.controller))
       .post(
         "/logout",
         authSession,

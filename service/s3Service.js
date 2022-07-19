@@ -6,6 +6,7 @@ const s3Upload = async(file) => {
   const param = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: `uploads/${file.originalname}`,
+    ContentType: 'image/png',
     Body: file.buffer,
   }
 

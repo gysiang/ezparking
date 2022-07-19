@@ -109,6 +109,19 @@ class Users extends Base {
     res.json({ status: "success", result });
   } 
 
+  async updateUserAvatar(req,res) {
+    console.log(req.body)
+    const {avatar} = req.body;
+    try {
+    await this.model.update(
+      {avatar:avatar},
+      {where: {id: req.cookies.userId}})
+    res.json({ status: "success"})
+    } catch (error) {
+      console.log("Error message: ", error);
+    }
+  }
+
    async getCurrentUserProfile(req, res) {
      console.log(req.cookies.userId)
     try {
@@ -131,24 +144,21 @@ class Users extends Base {
     }
   }
 
-  // route in progress
   async editCurrentUserProfile(req, res) {
-    console.log(request.file);
 
-    const { name, email,password,avatar } = req.body;
-
+    const { name, email,password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
     try {
-      const user = await this.model.findOne({
-        where: {
-          userId: Number(req.cookies.userId)
-        }, 
-      });
-      user.name = name;
-      user.email = email;
-      user.password = password;
-      user.avatar = avatar;
-      await user.save()
-      response.send('success');
+    await this.model.update(
+      {
+        name,
+        email,
+        password: hashedPassword
+      },
+      {where: 
+        {id: req.cookies.userId}
+      })
+      res.send('success');
       } catch (error) {
       console.log("Error message: ", error);
       return res.send("Failed");
