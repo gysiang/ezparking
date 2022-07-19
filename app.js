@@ -47,6 +47,15 @@ if (env === "development") {
   );
 }
 
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
+
 // import db
 const db = require("./models/index.js");
 
@@ -72,4 +81,4 @@ app.use("/", carparksRouter);
 // Set Express to listen on the given port
 const PORT = process.env.PORT || 3004;
 app.listen(PORT);
-console.log(`running on ${PORT}`);
+console.log(`App is running on ${PORT}`);

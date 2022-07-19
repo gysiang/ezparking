@@ -14,11 +14,6 @@ class CarparksRouter {
         authSession,
         this.controller.showHomepage.bind(this.controller)
       )
-      // .get(
-      //   "/session/getCarparks",
-      //   authSession,
-      //   this.controller.getCarparksInfo.bind(this.controller)
-      // )
       .get(
         "/getCarparks",
         authSession,

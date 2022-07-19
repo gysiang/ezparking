@@ -5,7 +5,9 @@
 }
 
 body {
-  background-color: rgba(244, 244, 244, 0.429);
+  background-image: url("../public/imgs/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   margin: 0;
 }
 
@@ -42,4 +44,23 @@ body {
 .map-container {
   width: 100%;
   height: 50vh;
+}
+
+.favCarparksDiv {
+  height: 230px;
+}
+
+.favCarparksDiv li a {
+  color: inherit;
+  list-style: none;
+}
+
+hr {
+  width: 80%;
+  margin: 0;
+}
+
+.copyrightDiv {
+  color: white;
+  width: 100%;
 }
