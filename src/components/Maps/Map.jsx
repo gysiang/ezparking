@@ -125,8 +125,7 @@ export function Map({
   // console.log("available carparks:", lotsFromURA);
   if (mounted && lotsFromURA != undefined && !isFiltered) {
     const newList = myPlaces.map((item) => {
-
-  let variable = lotsFromURA.find((c) => item.ppCode === c.carparkNo);
+      let variable = lotsFromURA.find((c) => item.ppCode === c.carparkNo);
       let availableLots = 0;
       if (variable !== undefined) {
         availableLots = variable.lotsAvailable;
@@ -136,10 +135,9 @@ export function Map({
         lotsAvailable: Number(availableLots),
       };
     });
-    console.log("newlist", newList);
+    // console.log("newlist", newList);
     setisFiltered(true);
     setnewList(newList);
-
   }
 
   if (newList.length > 0) {

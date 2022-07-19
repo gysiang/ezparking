@@ -46,7 +46,7 @@ class Carparks extends Base {
         Headers
       );
       const availableCarparksdata = getCarparksData.data.Result;
-      console.log('availableCarparksdata',availableCarparksdata)
+      console.log("availableCarparksdata", availableCarparksdata);
 
       // Fetch carpark details:
       const getCarparksDetails = await axios.get(
@@ -97,7 +97,7 @@ class Carparks extends Base {
       });
       const user = await db.User.findByPk(userId);
 
-      console.log("carpark found: ", carpark);
+      // console.log("carpark found: ", carpark);
       // If carpark is not in DB
       if (!carpark) {
         let newCarpark = {
@@ -108,7 +108,7 @@ class Carparks extends Base {
 
         let newCP = await this.model.create(newCarpark);
         await newCP.addUser(user);
-        console.log("new carpark:", newCP.dataValues);
+        // console.log("new carpark:", newCP.dataValues);
         let newFavoriteCarpark = newCP.dataValues;
         res.json({ newFavoriteCarpark });
         return;
@@ -117,10 +117,10 @@ class Carparks extends Base {
         let existingUserCarpark = await carpark.getUsers({
           through: "user_carparks",
         });
-        console.log("existing carpark?: ", existingUserCarpark);
+        // console.log("existing carpark?: ", existingUserCarpark);
         if (existingUserCarpark.length === 0) {
           await carpark.addUser(user);
-          console.log("new fav cp: ", carpark);
+          // console.log("new fav cp: ", carpark);
           let newFavoriteCarpark = carpark.dataValues;
           res.json({ newFavoriteCarpark });
           return;

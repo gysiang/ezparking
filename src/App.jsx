@@ -13,7 +13,7 @@ export default function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [userName, setUserName] = useState("");
 
-  console.log("token: ", token);
+  // console.log("token: ", token);
 
   useEffect(() => {
     isUserLoggedIn();
