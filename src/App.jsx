@@ -4,8 +4,6 @@ import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import Home from "./components/Home.jsx";
 
-import { result } from "lodash";
-
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displaySignupPage, setDisplaySignupPage] = useState(false);
@@ -15,7 +13,7 @@ export default function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [userName, setUserName] = useState("");
 
-  console.log("user name: ", userName);
+  console.log("token: ", token);
 
   useEffect(() => {
     isUserLoggedIn();
