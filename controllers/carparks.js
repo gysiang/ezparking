@@ -2,6 +2,7 @@ const Base = require("./base");
 const auth = require("../middleware/auth");
 const axios = require("axios");
 const db = require("../models");
+const { User } = require("../models");
 
 class Carparks extends Base {
   constructor(model) {
@@ -46,7 +47,7 @@ class Carparks extends Base {
         Headers
       );
       const availableCarparksdata = getCarparksData.data.Result;
-      console.log("availableCarparksdata", availableCarparksdata);
+      // console.log("availableCarparksdata", availableCarparksdata);
 
       // Fetch carpark details:
       const getCarparksDetails = await axios.get(
@@ -97,7 +98,6 @@ class Carparks extends Base {
       });
       const user = await db.User.findByPk(userId);
 
-      // console.log("carpark found: ", carpark);
       // If carpark is not in DB
       if (!carpark) {
         let newCarpark = {
@@ -108,7 +108,6 @@ class Carparks extends Base {
 
         let newCP = await this.model.create(newCarpark);
         await newCP.addUser(user);
-        // console.log("new carpark:", newCP.dataValues);
         let newFavoriteCarpark = newCP.dataValues;
         res.json({ newFavoriteCarpark });
         return;
@@ -116,16 +115,18 @@ class Carparks extends Base {
         // Check if user already added this carpark as favorite carpark
         let existingUserCarpark = await carpark.getUsers({
           through: "user_carparks",
+          where: {
+            id: userId,
+          },
         });
-        // console.log("existing carpark?: ", existingUserCarpark);
+
         if (existingUserCarpark.length === 0) {
           await carpark.addUser(user);
-          // console.log("new fav cp: ", carpark);
           let newFavoriteCarpark = carpark.dataValues;
           res.json({ newFavoriteCarpark });
           return;
         } else {
-          res.send("Already added.");
+          res.json({ delete: carpark.id });
           return;
         }
       }
@@ -142,6 +143,23 @@ class Carparks extends Base {
         through: "user_carparks",
       });
       res.json({ favoriteCarparks });
+    } catch (error) {
+      res.status(500).json({ error: error.mesage });
+    }
+  }
+
+  async deleteFavoriteCarpark(req, res) {
+    const { carparkId, userId } = req.body;
+    try {
+      const carpark = await this.model.findByPk(carparkId);
+      const userCarpark = await carpark.getUsers({
+        through: "user_carparks",
+        where: {
+          id: userId,
+        },
+      });
+      console.log(userCarpark);
+      res.send("delete request received");
     } catch (error) {
       res.status(500).json({ error: error.mesage });
     }

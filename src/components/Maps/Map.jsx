@@ -7,6 +7,7 @@ import {
 } from "@react-google-maps/api";
 import myPlaces from "./FilteredList.jsx";
 import axios from "axios";
+import { async } from "regenerator-runtime";
 
 export function Map({
   userLocation,
@@ -79,7 +80,6 @@ export function Map({
   };
 
   function openMapsHandler(event, selectedPlace) {
-    console.log(selectedPlace);
     const { lat, lng } = selectedPlace.position;
     window.open(
       "https://www.google.com/maps/search/?api=1&query=" + lat + "%2C" + lng,
@@ -87,10 +87,27 @@ export function Map({
     );
   }
 
-  async function favouritesHandler(event, selectedPlace) {
-    console.log(selectedPlace);
-    const { ppCode, parkingSystem, ppName } = selectedPlace;
+  function handleRemoveFavoriteCarpark(carparkInfo) {
+    // Delete from displaying list
+    let newFavoriteCarparks = favCarparks.filter(
+      (c) => c.carparkNo !== carparkInfo.carparkNo
+    );
+    console.log("carparks list remove one: ", newFavoriteCarparks);
+    return setFavCarparks(newFavoriteCarparks);
 
+    // Update DB user_carparks table
+    axios
+      .delete("/deleteFavoriteCarpark", carparkInfo, Headers)
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((error) => {
+        console.log("Error message: ", error);
+      });
+  }
+
+  async function favouritesHandler(event, selectedPlace) {
+    const { ppCode, parkingSystem, ppName } = selectedPlace;
     const userCarparkInfo = {
       userId: currentUserId,
       carparkNo: ppCode,
@@ -103,16 +120,19 @@ export function Map({
         Authorization: "Bearer " + token,
       },
     };
-    console.log("favorite carparks: ", favCarparks);
-    console.log("user carpark info: ", userCarparkInfo);
     axios
       .post("/addCarpark", userCarparkInfo, Headers)
       .then((result) => {
-        console.log(result.data);
-        let msg = result.data;
-        if (msg === "Already added.") {
-          alert("Already add as favorite carpark!");
-          location.reload();
+        console.log("id to delete:", result.data.delete);
+        if (result.data.delete) {
+          let carparkInfo = {
+            carparkId: result.data.delete,
+            userId: currentUserId,
+            carparkNo: ppCode,
+          };
+          alert("Remove carpark from my favorite carpark list");
+          handleRemoveFavoriteCarpark(carparkInfo);
+          // location.reload();
         }
         let newFavoriteCarpark = result.data.newFavoriteCarpark;
         let newFavoriteCarparks = [...favCarparks, newFavoriteCarpark];
@@ -122,7 +142,6 @@ export function Map({
         console.log("Error message: ", error);
       });
   }
-  // console.log("available carparks:", lotsFromURA);
   if (mounted && lotsFromURA != undefined && !isFiltered) {
     const newList = myPlaces.map((item) => {
       let variable = lotsFromURA.find((c) => item.ppCode === c.carparkNo);
@@ -135,7 +154,6 @@ export function Map({
         lotsAvailable: Number(availableLots),
       };
     });
-    // console.log("newlist", newList);
     setisFiltered(true);
     setnewList(newList);
   }

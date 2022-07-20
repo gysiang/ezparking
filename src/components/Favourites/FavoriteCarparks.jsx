@@ -6,8 +6,6 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
   let newCarparkList = [];
   let favCarparksList = [];
   if (lotsFromURA && favCarparks) {
-    console.log("carparks: ", favCarparks);
-    console.log("available lots: ", GeoConverter(lotsFromURA));
     newCarparkList = GeoConverter(lotsFromURA);
     favCarparksList = favCarparks.map((carpark) => {
       let current = newCarparkList.find(
@@ -21,10 +19,7 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
         };
       } else {
         let allCarparksList = GeoConverter(allCarparks.Result);
-        console.log("all carparks: ", allCarparksList);
         let crt = allCarparksList.find((c) => c.ppCode === carpark.carparkNo);
-        console.log("crt", crt);
-
         return {
           ...carpark,
           lat: crt.position.lat,
@@ -32,7 +27,6 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
         };
       }
     });
-    console.log("new list: ", favCarparksList);
   }
   return (
     <ul>
