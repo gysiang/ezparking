@@ -28,6 +28,11 @@ class CarparksRouter {
         "/favoriteCarparks",
         authSession,
         this.controller.getFavoriteCarparks.bind(this.controller)
+      )
+      .post(
+        "/deleteFavoriteCarpark",
+        authSession,
+        this.controller.deleteFavoriteCarpark.bind(this.controller)
       );
 
     return router;

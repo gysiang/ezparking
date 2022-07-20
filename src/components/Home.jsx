@@ -46,10 +46,10 @@ export default function Home({
         },
       })
       .then((result) => {
-        console.log("get available lots",result.data.carparks);
+        // console.log("get available lots",result.data.carparks);
         setlotsFromURA(result.data.carparks);
-        console.log("carparks: ", result.data.carparks);
-        console.log("converted carparks: ", GeoConverter(result.data.carparks));
+        // console.log("home carparks: ", result.data.carparks);
+        // console.log("converted carparks: ", GeoConverter(result.data.carparks));
       })
       .catch((error) => {
         console.log("Unable to fetch carpark data: ", error);
@@ -83,7 +83,7 @@ export default function Home({
   }, [lotsFromURA]);
 
   useEffect(() => {
-    console.log("mounted", mounted);
+    // console.log("mounted", mounted);
   }, [mounted]);
 
   return (
@@ -123,14 +123,15 @@ export default function Home({
             />
           </div>
 
-
           <div className="favCarparksDiv card d-flex flex-column justify-content-start align-items-center  m-2">
             <h5 className="mt-1 ">My Favorite Carparks</h5>
             <hr className="mb-2" />
             <div className="d-flex flex-column overflow-scroll">
-              <FavoriteCarparks favCarparks={favCarparks} />
+              <FavoriteCarparks
+                favCarparks={favCarparks}
+                lotsFromURA={lotsFromURA}
+              />
             </div>
-
           </div>
         </div>
       ) : (
@@ -141,7 +142,11 @@ export default function Home({
             setIsLoggedIn={setIsLoggedIn}
             currentUserId={currentUserId}
           />
-        <UserProfile currentUserId={currentUserId} showUserProfile={showUserProfile} setShowUserProfile={setShowUserProfile} />
+          <UserProfile
+            currentUserId={currentUserId}
+            showUserProfile={showUserProfile}
+            setShowUserProfile={setShowUserProfile}
+          />
         </div>
       )}
       <div className="text-center copyrightDiv position-fixed bottom-0 mb-2">
