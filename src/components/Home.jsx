@@ -144,11 +144,15 @@ export default function Home({
             token={token}
             setIsLoggedIn={setIsLoggedIn}
             currentUserId={currentUserId}
+            userName={userName}
+            avatar={avatar}
           />
           <UserProfile
             currentUserId={currentUserId}
             showUserProfile={showUserProfile}
             setShowUserProfile={setShowUserProfile}
+            userName={userName}
+            avatar={avatar}
           />
         </div>
       )}

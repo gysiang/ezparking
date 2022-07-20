@@ -2,11 +2,11 @@ import React, {useState,useEffect} from "react";
 import axios from "axios";
 import { FileUploader } from "./FileUploader.jsx";
 
-export default function UserProfile({showUserProfile, setShowUserProfile, currentUserId}) {
-  const [userName, setUserName] = useState("");
+export default function UserProfile({showUserProfile, setShowUserProfile, userName, avatar, currentUserId}) {
+  const [newUserName, setNewUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userProfileImg, setuserProfileImg] = useState("");
+  const [userProfileImg, setuserProfileImg] = useState(avatar);
   const [selectedFile, setSelectedFile] = useState(null);
 
 
@@ -19,7 +19,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
       .get("/currentUserProfile", user)
       .then((result)=> {
         console.log(result.data)
-        setUserName(result.data.user.name)
+        setNewUserName(result.data.user.name)
         setUserEmail(result.data.user.email)
         setuserProfileImg(result.data.user.avatar)
       }) 
@@ -43,7 +43,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
   }
 
   const userNameChange = (e) => {
-    setUserName(e.target.value);
+    setNewUserName(e.target.value);
   };
 
   const userEmailChange = (e) => {
@@ -58,7 +58,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
   const handleEditUserProfile = () => {
 
     const user = {
-      name: userName,
+      name: newUserName,
       email: userEmail,
       password: userPassword,
     };
@@ -91,10 +91,10 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
 
 
   return (
-    <div className="loginDiv d-flex flex-column justify-content-center align-items-center">
+    <div className="userProfileDiv d-flex flex-column justify-content-center align-items-center">
       <div className="d-flex flex-column border p-2 align-items-center rounded">
         <h5>User Profile</h5>
-        <img src={userProfileImg} />
+        <img src={avatar} />
         <br/>
         <FileUploader 
         selectedFile={selectedFile}
@@ -103,7 +103,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
         />
         <input
           type="text"
-          value={userName}
+          value={newUserName}
           onChange={userNameChange}
           placeholder="Name"
           className="form-control my-1"
@@ -128,6 +128,15 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
           className="form-control bg-primary my-1"
         >
           SUBMIT
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setShowUserProfile(false)
+          }}
+          className="form-control bg-info my-1"
+        >
+        Home
         </button>
       </div>
     </div>
