@@ -6,9 +6,11 @@ export default function Login({
   setIsLoggedIn,
   setCurrentUserId,
   setUserName,
+  setAvatar,
 }) {
-  const [userEmail, setUserEmail] = useState("123@123.com");
-  const [userPassword, setUserPassword] = useState("12345");
+  const [userEmail, setUserEmail] = useState("coco@gmail.com");
+  const [userPassword, setUserPassword] = useState("123");
+  
 
   const userEmailChange = (e) => {
     setUserEmail(e.target.value);
@@ -31,6 +33,8 @@ export default function Login({
           setIsLoggedIn(true);
           setCurrentUserId(result.data.user.id);
           setUserName(result.data.user.name);
+          setAvatar(result.data.user.avatar);
+          console.log("login: ", result.data.user.avatar)
         } else {
           alert("Unauthorized user");
         }

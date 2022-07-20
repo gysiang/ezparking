@@ -14,6 +14,7 @@ export default function Home({
   apiKey,
   setIsLoggedIn,
   userName,
+  avatar,
 }) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
@@ -95,6 +96,8 @@ export default function Home({
             token={token}
             setIsLoggedIn={setIsLoggedIn}
             currentUserId={currentUserId}
+            userName={userName}
+            avatar={avatar}
           />
           <h3 className="text-center mt-2">EZ Parking</h3>
           <div className="mapDiv d-flex card flex-column justify-content-center align-items-center m-2">
