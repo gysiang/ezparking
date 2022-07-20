@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Navbar({ setShowUserProfile, token, setIsLoggedIn }) {
+export default function Navbar({ setShowUserProfile, token, setIsLoggedIn, userName, avatar }) {
+  // let name = localStorage.getItem("userName")
+  // let ava = localStorage.getItem('avatar')
+  // console.log("avatar: ", ava)
+  // console.log('user name: ', name)
   return (
     <nav className="nav d-flex justify-content-between align-items-center px-3">
       <a
@@ -9,7 +13,8 @@ export default function Navbar({ setShowUserProfile, token, setIsLoggedIn }) {
           setShowUserProfile(true);
         }}
       >
-        Avatar
+        <img src={avatar} alt="Avatar" className="avatar"/>
+        {" "}{userName}
       </a>
       <a
         onClick={() => {

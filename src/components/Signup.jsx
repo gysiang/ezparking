@@ -23,6 +23,7 @@ export default function Signup({ setDisplaySignupPage }) {
       name: userName,
       email: userEmail,
       password: userPassword,
+      avatar: "https://ezparking1.s3.ap-southeast-1.amazonaws.com/uploads/img_avatar.png"
     };
 
     axios

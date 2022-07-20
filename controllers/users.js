@@ -11,7 +11,7 @@ class Users extends Base {
 
   async signupUser(req, res) {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, avatar } = req.body;
       if (!name || !email || !password) {
         return res.status(400).json({ msg: "Need to fill all field!" });
       }
@@ -31,6 +31,7 @@ class Users extends Base {
         name: name,
         email: email,
         password: hashedPassword,
+        avatar: avatar,
       };
 
       await this.model.create(newUser);
@@ -68,6 +69,7 @@ class Users extends Base {
             id: user.id,
             name: user.name,
             email: user.email,
+            avatar: user.avatar,
           },
         });
       }
@@ -78,7 +80,6 @@ class Users extends Base {
   }
 
   getCurrentUser(req, res) {
-    console.log("getting current user");
     const token = req.cookies.plopplop;
     const userId = req.cookies.userId;
     if (token) {
