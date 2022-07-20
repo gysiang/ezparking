@@ -14,7 +14,7 @@ export default function Home({
   apiKey,
   setIsLoggedIn,
   userName,
-  avatar,
+  avatar
 }) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
@@ -144,10 +144,11 @@ export default function Home({
             token={token}
             setIsLoggedIn={setIsLoggedIn}
             currentUserId={currentUserId}
+            userName={userName}
+            avatar={avatar}
           />
           <UserProfile
             currentUserId={currentUserId}
-            showUserProfile={showUserProfile}
             setShowUserProfile={setShowUserProfile}
           />
         </div>

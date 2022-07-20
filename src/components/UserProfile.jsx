@@ -2,13 +2,12 @@ import React, {useState,useEffect} from "react";
 import axios from "axios";
 import { FileUploader } from "./FileUploader.jsx";
 
-export default function UserProfile({showUserProfile, setShowUserProfile, currentUserId}) {
+export default function UserProfile({setShowUserProfile, currentUserId}) {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userProfileImg, setuserProfileImg] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-
 
   const getUserCurrentProfile = () => {
     const user = {

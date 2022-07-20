@@ -3,7 +3,8 @@ import axios from "axios";
 
 export default function Navbar({ setShowUserProfile, token, setIsLoggedIn, userName, avatar }) {
   // let name = localStorage.getItem("userName")
-  // let ava = localStorage.getItem('avatar')
+  // let avatar = localStorage.getItem("avatar");
+  // console.log(avatar)
   // console.log("avatar: ", ava)
   // console.log('user name: ', name)
   return (
