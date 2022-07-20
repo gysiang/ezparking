@@ -92,12 +92,14 @@ export function Map({
     let newFavoriteCarparks = favCarparks.filter(
       (c) => c.carparkNo !== carparkInfo.carparkNo
     );
-    console.log("carparks list remove one: ", newFavoriteCarparks);
-    return setFavCarparks(newFavoriteCarparks);
+    // console.log("curent carparks list: ", newFavoriteCarparks);
+    setFavCarparks(newFavoriteCarparks);
+    // console.log("prev carparks list: ", favCarparks)
+    console.log("carpark info:", carparkInfo)
 
     // Update DB user_carparks table
     axios
-      .delete("/deleteFavoriteCarpark", carparkInfo, Headers)
+      .post("/deleteFavoriteCarpark", carparkInfo, Headers)
       .then((result) => {
         console.log(result.data);
       })
@@ -130,13 +132,14 @@ export function Map({
             userId: currentUserId,
             carparkNo: ppCode,
           };
-          alert("Remove carpark from my favorite carpark list");
+          // alert("Remove carpark from my favorite carpark list");
           handleRemoveFavoriteCarpark(carparkInfo);
-          // location.reload();
+        } else {
+
+          let newFavoriteCarpark = result.data.newFavoriteCarpark;
+          let newFavoriteCarparks = [...favCarparks, newFavoriteCarpark];
+          setFavCarparks(newFavoriteCarparks);
         }
-        let newFavoriteCarpark = result.data.newFavoriteCarpark;
-        let newFavoriteCarparks = [...favCarparks, newFavoriteCarpark];
-        setFavCarparks(newFavoriteCarparks);
       })
       .catch((error) => {
         console.log("Error message: ", error);

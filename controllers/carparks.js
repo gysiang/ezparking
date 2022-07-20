@@ -155,11 +155,12 @@ class Carparks extends Base {
       const userCarpark = await carpark.getUsers({
         through: "user_carparks",
         where: {
-          id: userId,
+          id: Number(userId),
         },
       });
-      console.log(userCarpark);
-      res.send("delete request received");
+      let UserCarpark = userCarpark[0].user_carparks;
+      await UserCarpark.destroy();
+      return res.send("delete request received");
     } catch (error) {
       res.status(500).json({ error: error.mesage });
     }

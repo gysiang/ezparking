@@ -7,27 +7,31 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
   let favCarparksList = [];
   if (lotsFromURA && favCarparks) {
     newCarparkList = GeoConverter(lotsFromURA);
-    favCarparksList = favCarparks.map((carpark) => {
-      let current = newCarparkList.find(
-        (c) => c.carparkNo === carpark.carparkNo
-      );
-      if (current) {
-        return {
-          ...carpark,
-          lat: current.position.lat,
-          lng: current.position.lng,
-        };
-      } else {
-        let allCarparksList = GeoConverter(allCarparks.Result);
-        let crt = allCarparksList.find((c) => c.ppCode === carpark.carparkNo);
-        return {
-          ...carpark,
-          lat: crt.position.lat,
-          lng: crt.position.lng,
-        };
-      }
-    });
-  }
+    console.log("carparks: ", favCarparks)
+      favCarparksList = favCarparks.map((carpark) => {
+        if(carpark){
+          let current = newCarparkList.find(
+            (c) => c.carparkNo === carpark.carparkNo
+          );
+          if (current) {
+            return {
+              ...carpark,
+              lat: current.position.lat,
+              lng: current.position.lng,
+            };
+          } else {
+            let allCarparksList = GeoConverter(allCarparks.Result);
+            let crt = allCarparksList.find((c) => c.ppCode === carpark.carparkNo);
+            return {
+              ...carpark,
+              lat: crt.position.lat,
+              lng: crt.position.lng,
+            };
+          }
+        }
+      });
+      console.log("current carpark list:",favCarparksList)
+    }
   return (
     <ul>
       {favCarparksList.map((carpark, index) => (
