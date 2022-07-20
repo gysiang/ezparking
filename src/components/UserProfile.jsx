@@ -1,11 +1,14 @@
 import React, {useState,useEffect} from "react";
 import axios from "axios";
+import { FileUploader } from "./FileUploader.jsx";
 
 export default function UserProfile({showUserProfile, setShowUserProfile, currentUserId}) {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userProfileImg, setuserProfileImg] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+
 
   const getUserCurrentProfile = () => {
     const user = {
@@ -25,6 +28,20 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
       });
   }
 
+  const putUserAvatar = () => {
+    const avatarImg = {
+      avatar: userProfileImg
+    }
+    axios
+      .put("/updateUserAvatar",avatarImg)
+      .then((result)=>{
+        console.log(result.data)
+      })
+      .catch((error) => {
+        console.log("Error message: ", error);
+      });
+  }
+
   const userNameChange = (e) => {
     setUserName(e.target.value);
   };
@@ -37,25 +54,20 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
     setUserPassword(e.target.value);
   };
 
-  const handleAvatarUpload = () => {
-    axios.get("/uploadAvatar")
-  }
 
   const handleEditUserProfile = () => {
 
     const user = {
-      userid: currentUserId,
       name: userName,
       email: userEmail,
       password: userPassword,
-      avatar:userProfileImg,
     };
 
     // need route to edit user profile
     axios
       .put("/currentUserProfile", user)
       .then((result) => {
-        if (result.data !== "Failed") {
+        if (result.data == "success") {
           alert("Successfully Edited User Profile")
           setShowUserProfile(false);
         } else {
@@ -72,26 +84,23 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
     getUserCurrentProfile()
   }, []);
 
+  useEffect(() => {
+    console.log(userProfileImg)
+    putUserAvatar()
+  }, [userProfileImg]);
+
 
   return (
     <div className="loginDiv d-flex flex-column justify-content-center align-items-center">
       <div className="d-flex flex-column border p-2 align-items-center rounded">
         <h5>User Profile</h5>
-
-        <div>
-          <label>Upload profile picture</label>
-          <input 
-            type="file" 
-            enctype="multipart/form-data"
-            name="avatar"/>
-        </div>
-        <div>
-          <input 
-            type="submit" 
-            onClick={handleAvatarUpload}
-            value="Upload" />
-        </div>
-
+        <img src={userProfileImg} />
+        <br/>
+        <FileUploader 
+        selectedFile={selectedFile}
+        setSelectedFile={setSelectedFile}
+        setuserProfileImg={setuserProfileImg}
+        />
         <input
           type="text"
           value={userName}
@@ -108,7 +117,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
         />
         <input
           type="password"
-          value=""
+          value={userPassword}
           onChange={userPasswordChange}
           placeholder="Password"
           className="form-control my-1"
@@ -123,4 +132,4 @@ export default function UserProfile({showUserProfile, setShowUserProfile, curren
       </div>
     </div>
   )
-}
+  }

@@ -7,8 +7,8 @@ export default function Login({
   setCurrentUserId,
   setUserName,
 }) {
-  const [userEmail, setUserEmail] = useState("eva.fang.wang@gmail.com");
-  const [userPassword, setUserPassword] = useState("123");
+  const [userEmail, setUserEmail] = useState("123@123.com");
+  const [userPassword, setUserPassword] = useState("12345");
 
   const userEmailChange = (e) => {
     setUserEmail(e.target.value);

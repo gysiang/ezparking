@@ -6,6 +6,7 @@ import Navbar from "./Navbar.jsx";
 import UserProfile from "./UserProfile.jsx";
 import FavoriteCarparks from "./Favourites/FavoriteCarparks.jsx";
 import GeoConverter from "./Maps/GeoConverter.jsx";
+import { Spinner } from "./Spinner/Spinner.jsx"
 
 export default function Home({
   token,
@@ -99,7 +100,8 @@ export default function Home({
           <div className="mapDiv d-flex card flex-column justify-content-center align-items-center m-2">
             {!mounted ? (
               <div>
-                <h1 className="textCenter">Waiting for Map to Load</h1>
+                <h1 className="text-center">Waiting for Map to Load</h1>
+                <Spinner />
               </div>
             ) : (
               <MapContainer
