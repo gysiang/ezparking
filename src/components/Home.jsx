@@ -150,6 +150,8 @@ export default function Home({
           <UserProfile
             currentUserId={currentUserId}
             setShowUserProfile={setShowUserProfile}
+            userName={userName}
+            avatar={avatar}
           />
         </div>
       )}
