@@ -2,7 +2,7 @@ import React, {useState,useEffect} from "react";
 import axios from "axios";
 import { FileUploader } from "./FileUploader.jsx";
 
-export default function UserProfile({showUserProfile, setShowUserProfile, userName, avatar, currentUserId}) {
+export default function UserProfile({showUserProfile, setShowUserProfile, userName, avatar, setAvatar, currentUserId}) {
   const [newUserName, setNewUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -85,8 +85,10 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
   }, []);
 
   useEffect(() => {
-    console.log(userProfileImg)
-    putUserAvatar()
+    console.log('userprofileimg', userProfileImg);
+    setAvatar(userProfileImg);
+    putUserAvatar();
+    // localStorage.setItem("avatar", JSON.stringify(userProfileImg));
   }, [userProfileImg]);
 
 
@@ -94,7 +96,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
     <div className="userProfileDiv d-flex flex-column justify-content-center align-items-center">
       <div className="d-flex flex-column border p-2 align-items-center rounded">
         <h5>User Profile</h5>
-        <img src={avatar} />
+        <img src={userProfileImg} />
         <br/>
         <FileUploader 
         selectedFile={selectedFile}

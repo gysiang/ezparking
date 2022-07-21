@@ -15,6 +15,7 @@ export default function Home({
   setIsLoggedIn,
   userName,
   avatar,
+  setAvatar
 }) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
@@ -118,6 +119,7 @@ export default function Home({
                 userZoom={userZoom}
                 favCarparks={favCarparks}
                 setFavCarparks={setFavCarparks}
+                showUserProfile={showUserProfile}
               />
             )}
             <GetUserGeolocation
@@ -153,6 +155,7 @@ export default function Home({
             setShowUserProfile={setShowUserProfile}
             userName={userName}
             avatar={avatar}
+            setAvatar={setAvatar}
           />
         </div>
       )}
