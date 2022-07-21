@@ -30,12 +30,12 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
           }
         }
       });
-      console.log("current carpark list:",favCarparksList)
+      // console.log("current carpark list:",favCarparksList)
     }
   return (
-    <ul>
+    <ul className="mx-0 px-0">
       {favCarparksList.map((carpark, index) => (
-        <li key={String(index)}>
+        <li key={String(index)} style={{listStyle: "none"}}>
           <a
             onClick={() => {
               window.open(
@@ -47,7 +47,8 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
               );
             }}
           >
-            {carpark.carparkName}
+            <i class="bi bi-arrow-right"></i> {" "}
+          {carpark.carparkName}
           </a>
         </li>
       ))}

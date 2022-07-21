@@ -135,7 +135,7 @@ export default function Home({
           <div className="favCarparksDiv card d-flex flex-column justify-content-start align-items-center  m-2">
             <h5 className="mt-1 ">My Favorite Carparks</h5>
             <hr className="mb-2" />
-            <div className="d-flex flex-column overflow-scroll">
+            <div className="d-flex flex-column overflow-scroll mx-0">
               <FavoriteCarparks
                 favCarparks={favCarparks}
                 lotsFromURA={lotsFromURA}
