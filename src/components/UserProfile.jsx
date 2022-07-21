@@ -2,11 +2,11 @@ import React, {useState,useEffect} from "react";
 import axios from "axios";
 import { FileUploader } from "./FileUploader.jsx";
 
-export default function UserProfile({showUserProfile, setShowUserProfile, userName, avatar, setAvatar, currentUserId}) {
-  const [newUserName, setNewUserName] = useState("");
+export default function UserProfile({showUserProfile, setShowUserProfile, userName,setUserName, avatar, setAvatar, currentUserId}) {
+  // const [newUserName, setNewUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userProfileImg, setuserProfileImg] = useState(avatar);
+  // const [userProfileImg, setuserProfileImg] = useState(avatar);
   const [selectedFile, setSelectedFile] = useState(null);
 
 
@@ -19,9 +19,9 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
       .get("/currentUserProfile", user)
       .then((result)=> {
         console.log(result.data)
-        setNewUserName(result.data.user.name)
+        setUserName(result.data.user.name)
         setUserEmail(result.data.user.email)
-        setuserProfileImg(result.data.user.avatar)
+        setAvatar(result.data.user.avatar)
       }) 
       .catch((error) => {
         console.log("Error message: ", error);
@@ -30,7 +30,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
 
   const putUserAvatar = () => {
     const avatarImg = {
-      avatar: userProfileImg
+      avatar: avatar
     }
     axios
       .put("/updateUserAvatar",avatarImg)
@@ -43,7 +43,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
   }
 
   const userNameChange = (e) => {
-    setNewUserName(e.target.value);
+    setUserName(e.target.value);
   };
 
   const userEmailChange = (e) => {
@@ -58,7 +58,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
   const handleEditUserProfile = () => {
 
     const user = {
-      name: newUserName,
+      name: userName,
       email: userEmail,
       password: userPassword,
     };
@@ -85,27 +85,25 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
   }, []);
 
   useEffect(() => {
-    console.log('userprofileimg', userProfileImg);
-    setAvatar(userProfileImg);
     putUserAvatar();
-    // localStorage.setItem("avatar", JSON.stringify(userProfileImg));
-  }, [userProfileImg]);
+    localStorage.setItem("avatar", JSON.stringify(avatar));
+  }, [avatar]);
 
 
   return (
     <div className="userProfileDiv d-flex flex-column justify-content-center align-items-center">
       <div className="d-flex flex-column border p-2 align-items-center rounded">
         <h5>User Profile</h5>
-        <img src={userProfileImg} />
+        <img src={avatar} />
         <br/>
         <FileUploader 
         selectedFile={selectedFile}
         setSelectedFile={setSelectedFile}
-        setuserProfileImg={setuserProfileImg}
+        setAvatar={setAvatar}
         />
         <input
           type="text"
-          value={newUserName}
+          value={userName}
           onChange={userNameChange}
           placeholder="Name"
           className="form-control my-1"

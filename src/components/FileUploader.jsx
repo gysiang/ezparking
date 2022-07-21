@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-export const FileUploader = ({selectedFile,setSelectedFile,setuserProfileImg}) => {
+export const FileUploader = ({selectedFile,setSelectedFile,setuserProfileImg,setAvatar}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -13,7 +13,7 @@ export const FileUploader = ({selectedFile,setSelectedFile,setuserProfileImg}) =
         })
         .then((response) => {
           console.log(response.data.result.Location);
-          setuserProfileImg(response.data.result.Location)
+          setAvatar(response.data.result.Location)
         })
         .catch((error) => {
         console.log("Error message: ", error);
@@ -38,7 +38,7 @@ export const FileUploader = ({selectedFile,setSelectedFile,setuserProfileImg}) =
         <input type="submit" value="Upload File"/>
         <br/>
         </form>
-      <button onClick={handleRemoveAvatar}>Remove</button>
+      {/* <button onClick={handleRemoveAvatar}>Remove</button> */}
     </>
   )
 };
