@@ -37,6 +37,17 @@ body {
   font-size: 30px;
 }
 
+.catIcons i {
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.favIcon {
+  font-size: 30px;
+}
+
 .logoutIcon {
   font-size: 25px;
 }
@@ -54,7 +65,7 @@ body {
 }
 
 .favCarparksDiv {
-  height: 230px;
+  height: 200px;
 }
 
 .favCarparksDiv li a {
@@ -62,7 +73,7 @@ body {
   list-style: none;
 }
 
-hr {
+.favCarparksDiv hr {
   width: 80%;
   margin: 0;
 }

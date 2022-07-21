@@ -195,31 +195,33 @@ export function Map ({
             anchor={markerMap[selectedPlace.ppCode]}
             onCloseClick={() => setInfoOpen(false)}
           >
-            <div>
-              <h4>{selectedPlace.ppName}</h4>
-              <hr />
-              <div>{selectedPlace.ppCode}</div>
+            <div className="text-center">
+              <h6 className="text-center">{selectedPlace.ppName}</h6>
+              <hr style={{margin: "0 0 5px 0"}}/>
+              {/* <div>{selectedPlace.ppCode}</div> */}
               <div>Available Lots: {selectedPlace.lotsAvailable}</div>
               <div>Vehicle Category:{selectedPlace.vehCat}</div>
               <div>Weekday Rate: {selectedPlace.weekdayRate}</div>
               <div>Weekend Rate: {selectedPlace.satdayRate}</div> 
-              <div>Operation Start Time: {selectedPlace.startTime} - {selectedPlace.endTime}</div> 
+              <div>Operation Time: {selectedPlace.startTime} - {selectedPlace.endTime}</div> 
               <br />
-              <button
+              <div className="d-flex flex-row justify-content-around align-items-center">
+              <a
                 type="button"
-                className="btn btn-primary"
+                style={{marginLeft: "10px"}}
                 onClick={(event) => openMapsHandler(event, selectedPlace)}
               >
-                Open Maps
-              </button>
+                <i class="bi bi-map" style={{fontSize: "20px", color: "blue"}}></i>
+              </a>
               &nbsp;
-              <button
+              <a
                 type="button"
-                className="btn btn-primary"
+                style={{marginRight: "10px"}}
                 onClick={(event) => favouritesHandler(event, selectedPlace)}
               >
-                Favourite
-              </button>
+                <i className="bi bi-heart favIcon" style={{fontSize: "20px", color: "red"}}></i>
+              </a>
+              </div>
             </div>
           </InfoWindow>
         )}

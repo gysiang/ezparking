@@ -5,7 +5,7 @@ import GetUserGeolocation from "./Maps/UserGeoLocation.jsx";
 import Navbar from "./Navbar.jsx";
 import UserProfile from "./UserProfile.jsx";
 import FavoriteCarparks from "./Favourites/FavoriteCarparks.jsx";
-import GeoConverter from "./Maps/GeoConverter.jsx";
+// import GeoConverter from "./Maps/GeoConverter.jsx";
 import { Spinner } from "./Spinner/Spinner.jsx"
 
 export default function Home({
@@ -103,6 +103,12 @@ export default function Home({
             avatar={avatar}
           />
           <h3 className="text-center mt-2">EZ Parking</h3>
+          <div className="d-flex flex-row justify-content-evenly align-items-center catIcons m-0">
+            <i className="fa-solid fa-motorcycle" style={{color: "yellow"}}></i>
+            <i className="fa-solid fa-car" style={{color: "blue"}}></i>
+            <i className="fa-solid fa-truck-moving" style={{color: "red"}}></i>
+
+          </div>
           <div className="mapDiv d-flex card flex-column justify-content-center align-items-center m-2">
             {!mounted ? (
               <div>
@@ -135,7 +141,7 @@ export default function Home({
           <div className="favCarparksDiv card d-flex flex-column justify-content-start align-items-center  m-2">
             <h5 className="mt-1 ">My Favorite Carparks</h5>
             <hr className="mb-2" />
-            <div className="d-flex flex-column overflow-scroll">
+            <div className="d-flex flex-column overflow-scroll mx-0">
               <FavoriteCarparks
                 favCarparks={favCarparks}
                 lotsFromURA={lotsFromURA}
