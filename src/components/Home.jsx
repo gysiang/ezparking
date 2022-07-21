@@ -14,6 +14,7 @@ export default function Home({
   apiKey,
   setIsLoggedIn,
   userName,
+  setUserName,
   avatar,
   setAvatar
 }) {
@@ -154,6 +155,7 @@ export default function Home({
             showUserProfile={showUserProfile}
             setShowUserProfile={setShowUserProfile}
             userName={userName}
+            setUserName={setUserName}
             avatar={avatar}
             setAvatar={setAvatar}
           />

@@ -56,6 +56,7 @@ export default function App() {
           apiKey={apiKey}
           setIsLoggedIn={setIsLoggedIn}
           userName={userName}
+          setUserName={setUserName}
           avatar={avatar}
           setAvatar={setAvatar}
         />
