@@ -211,7 +211,7 @@ export function Map ({
                 style={{marginLeft: "10px"}}
                 onClick={(event) => openMapsHandler(event, selectedPlace)}
               >
-                <i class="bi bi-map" style={{fontSize: "20px"}}></i>
+                <i class="bi bi-map" style={{fontSize: "20px", color: "blue"}}></i>
               </a>
               &nbsp;
               <a
@@ -219,8 +219,7 @@ export function Map ({
                 style={{marginRight: "10px"}}
                 onClick={(event) => favouritesHandler(event, selectedPlace)}
               >
-                <i className="bi bi-heart favIcon" style={{fontSize: "20px"}}></i>
-                {/* <i className="bi bi-heart-fill"></i> */}
+                <i className="bi bi-heart favIcon" style={{fontSize: "20px", color: "red"}}></i>
               </a>
               </div>
             </div>

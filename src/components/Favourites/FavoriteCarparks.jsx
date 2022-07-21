@@ -47,7 +47,8 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
               );
             }}
           >
-            <i className="bi bi-arrow-right"></i> {" "}
+            <i className="fa-solid fa-heart" style={{color: "red"}}></i>
+             {" "}
           {carpark.carparkName}
           </a>
         </li>
