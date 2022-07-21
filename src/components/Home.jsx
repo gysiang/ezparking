@@ -25,6 +25,7 @@ export default function Home({
   const [userLocation, setuserLocation] = useState();
   const [userZoom, setuserZoom] = useState(0);
   const [showUserProfile, setShowUserProfile] = useState(false);
+  const [showCarparkProfile, setshowCarparkProfile] = useState(false);
 
   const showHomepage = () => {
     axios
@@ -121,6 +122,8 @@ export default function Home({
                 favCarparks={favCarparks}
                 setFavCarparks={setFavCarparks}
                 showUserProfile={showUserProfile}
+                showCarparkProfile={showCarparkProfile}
+                setshowCarparkProfile={setshowCarparkProfile}
               />
             )}
             <GetUserGeolocation
