@@ -37,6 +37,13 @@ body {
   font-size: 30px;
 }
 
+.catIcons i {
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  border-radius: 12px;
+}
+
 .favIcon {
   font-size: 30px;
 }
@@ -58,7 +65,7 @@ body {
 }
 
 .favCarparksDiv {
-  height: 230px;
+  height: 200px;
 }
 
 .favCarparksDiv li a {

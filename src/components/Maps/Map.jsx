@@ -208,7 +208,6 @@ export function Map ({
               <div className="d-flex flex-row justify-content-around align-items-center">
               <a
                 type="button"
-                className=""
                 style={{marginLeft: "10px"}}
                 onClick={(event) => openMapsHandler(event, selectedPlace)}
               >
@@ -217,7 +216,6 @@ export function Map ({
               &nbsp;
               <a
                 type="button"
-                className=""
                 style={{marginRight: "10px"}}
                 onClick={(event) => favouritesHandler(event, selectedPlace)}
               >
