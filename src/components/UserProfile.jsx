@@ -2,12 +2,13 @@ import React, {useState,useEffect} from "react";
 import axios from "axios";
 import { FileUploader } from "./FileUploader.jsx";
 
-export default function UserProfile({setShowUserProfile,currentUserId,setuserName,setavatar }) {
+export default function UserProfile({showUserProfile, setShowUserProfile, userName, avatar, setAvatar, currentUserId}) {
   const [newUserName, setNewUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userProfileImg, setuserProfileImg] = useState(avatar);
   const [selectedFile, setSelectedFile] = useState(null);
+
 
   const getUserCurrentProfile = () => {
     const user = {
@@ -19,10 +20,8 @@ export default function UserProfile({setShowUserProfile,currentUserId,setuserNam
       .then((result)=> {
         console.log(result.data)
         setNewUserName(result.data.user.name)
-        setuserName(result.data.user.name)
         setUserEmail(result.data.user.email)
         setuserProfileImg(result.data.user.avatar)
-        setavatar(result.data.user.avatar)
       }) 
       .catch((error) => {
         console.log("Error message: ", error);
@@ -86,8 +85,10 @@ export default function UserProfile({setShowUserProfile,currentUserId,setuserNam
   }, []);
 
   useEffect(() => {
-    console.log(userProfileImg)
-    putUserAvatar()
+    console.log('userprofileimg', userProfileImg);
+    setAvatar(userProfileImg);
+    putUserAvatar();
+    // localStorage.setItem("avatar", JSON.stringify(userProfileImg));
   }, [userProfileImg]);
 
 
@@ -95,7 +96,7 @@ export default function UserProfile({setShowUserProfile,currentUserId,setuserNam
     <div className="userProfileDiv d-flex flex-column justify-content-center align-items-center">
       <div className="d-flex flex-column border p-2 align-items-center rounded">
         <h5>User Profile</h5>
-        <img src={avatar} />
+        <img src={userProfileImg} />
         <br/>
         <FileUploader 
         selectedFile={selectedFile}

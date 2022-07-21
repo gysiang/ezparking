@@ -11,18 +11,19 @@ export default function App() {
   const [apiKey, setapiKey] = useState("");
 
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [userName, setUserName] = useState();
+  const [avatar, setAvatar] = useState();
+  // const [userName, setUserName] = useState(() => {
+  //   const storedName = localStorage.getItem('userName');
+  //   const initName = JSON.parse(storedName);
+  //   return initName || "";
+  // });
 
-  const [userName, setUserName] = useState(() => {
-    const storedName = localStorage.getItem('userName');
-    const initName = JSON.parse(storedName);
-    return initName || "";
-  });
-
-  const [avatar, setAvatar] = useState(() => {
-    const storedAvatar = localStorage.getItem('avatar');
-    const initVal = JSON.parse(storedAvatar);
-    return initVal || "";
-  });
+  // const [avatar, setAvatar] = useState(() => {
+  //   const storedAvatar = localStorage.getItem('avatar');
+  //   const initVal = JSON.parse(storedAvatar);
+  //   return initVal || "";
+  // });
 
   useEffect(() => {
     isUserLoggedIn();
@@ -32,8 +33,6 @@ export default function App() {
     localStorage.setItem("userName", JSON.stringify(userName));
     localStorage.setItem("avatar", JSON.stringify(avatar));
   }, [userName, avatar]);
-
-
 
   const isUserLoggedIn = () => {
     axios
@@ -58,6 +57,7 @@ export default function App() {
           setIsLoggedIn={setIsLoggedIn}
           userName={userName}
           avatar={avatar}
+          setAvatar={setAvatar}
         />
       ) : !displaySignupPage ? (
         <Login

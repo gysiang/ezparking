@@ -9,7 +9,7 @@ import myPlaces from "./FilteredList.jsx";
 import axios from "axios";
 import { async } from "regenerator-runtime";
 
-export function Map({
+export function Map ({
   userLocation,
   userZoom,
   setMounted,
@@ -19,6 +19,7 @@ export function Map({
   token,
   favCarparks,
   setFavCarparks,
+  showUserProfile
 }) {
   const [mapRef, setMapRef] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -51,6 +52,11 @@ export function Map({
     // Fit map bounds to contain all markers
     fitBounds(map);
   };
+
+    useEffect(() => {
+      setCenter({ lat: 1.290270, lng: 103.851959 })
+      setZoom(10)
+  }, [showUserProfile]);
 
   // We have to create a mapping of our places to actual Marker objects
   const markerLoadHandler = (marker, place) => {
