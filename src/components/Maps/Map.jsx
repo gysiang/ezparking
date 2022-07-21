@@ -19,7 +19,7 @@ export function Map ({
   token,
   favCarparks,
   setFavCarparks,
-  showUserProfile
+  showUserProfile,
 }) {
   const [mapRef, setMapRef] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -70,12 +70,12 @@ export function Map ({
     // console.log(place);
     setSelectedPlace(place);
 
+    setInfoOpen(true);
+
     // Required so clicking a 2nd marker works as expected
     if (infoOpen) {
       setInfoOpen(false);
     }
-
-    setInfoOpen(true);
 
     // If you want to zoom in a little on marker click
     if (zoom < 13) {
@@ -167,6 +167,7 @@ export function Map ({
     setnewList(newList);
   }
 
+
   if (newList.length > 0) {
     return (
       <GoogleMap
@@ -200,6 +201,9 @@ export function Map ({
               <div>{selectedPlace.ppCode}</div>
               <div>Available Lots: {selectedPlace.lotsAvailable}</div>
               <div>Vehicle Category:{selectedPlace.vehCat}</div>
+              <div>Weekday Rate: {selectedPlace.weekdayRate}</div>
+              <div>Weekend Rate: {selectedPlace.satdayRate}</div> 
+              <div>Operation Start Time: {selectedPlace.startTime} - {selectedPlace.endTime}</div> 
               <br />
               <button
                 type="button"

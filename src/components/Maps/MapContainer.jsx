@@ -13,6 +13,7 @@ export default function MapContainer({
   token,
   favCarparks,
   setFavCarparks,
+  showUserProfile,
 }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey,
@@ -30,6 +31,7 @@ export default function MapContainer({
       token={token}
       favCarparks={favCarparks}
       setFavCarparks={setFavCarparks}
+      showUserProfile={showUserProfile}
     />
   );
 }
