@@ -6,7 +6,7 @@ import Navbar from "./Navbar.jsx";
 import UserProfile from "./UserProfile.jsx";
 import FavoriteCarparks from "./Favourites/FavoriteCarparks.jsx";
 // import GeoConverter from "./Maps/GeoConverter.jsx";
-import { Spinner } from "./Spinner/Spinner.jsx"
+import { Spinner } from "./Spinner/Spinner.jsx";
 
 export default function Home({
   token,
@@ -16,7 +16,7 @@ export default function Home({
   userName,
   setUserName,
   avatar,
-  setAvatar
+  setAvatar,
 }) {
   const [map, setMap] = useState();
   const [favCarparks, setFavCarparks] = useState([]);
@@ -83,8 +83,7 @@ export default function Home({
     }
   }, [lotsFromURA]);
 
-  useEffect(() => {
-  }, [mounted]);
+  useEffect(() => {}, [mounted]);
 
   return (
     <div className="">
@@ -100,10 +99,15 @@ export default function Home({
           />
           <h3 className="text-center mt-2">EZ Parking</h3>
           <div className="d-flex flex-row justify-content-evenly align-items-center catIcons m-0">
-            <i className="fa-solid fa-motorcycle" style={{color: "yellow"}}></i>
-            <i className="fa-solid fa-car" style={{color: "blue"}}></i>
-            <i className="fa-solid fa-truck-moving" style={{color: "red"}}></i>
-
+            <i
+              className="fa-solid fa-motorcycle"
+              style={{ color: "yellow" }}
+            ></i>
+            <i className="fa-solid fa-car" style={{ color: "blue" }}></i>
+            <i
+              className="fa-solid fa-truck-moving"
+              style={{ color: "red" }}
+            ></i>
           </div>
           <div className="mapDiv d-flex card flex-column justify-content-center align-items-center m-2">
             {!mounted ? (
@@ -163,6 +167,7 @@ export default function Home({
             setUserName={setUserName}
             avatar={avatar}
             setAvatar={setAvatar}
+            setIsLoggedIn={setIsLoggedIn}
           />
         </div>
       )}

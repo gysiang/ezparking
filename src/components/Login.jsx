@@ -10,7 +10,6 @@ export default function Login({
 }) {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  
 
   const userEmailChange = (e) => {
     setUserEmail(e.target.value);
@@ -23,26 +22,29 @@ export default function Login({
   const handleLogin = () => {
     let user;
     const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
-    if(!userEmail || !userPassword){
-      alert('Your email or password is empty!')
-    } else if (!emailPattern.test(userEmail)){
-      alert("Invalid email!")
+    if (!userEmail || !userPassword) {
+      alert("Your email or password is empty!");
+    } else if (!emailPattern.test(userEmail)) {
+      alert("Invalid email!");
     } else {
       user = {
-      email: userEmail,
-      password: userPassword,
-    };
-  }
+        email: userEmail,
+        password: userPassword,
+      };
+    }
 
-    if(user){
+    if (user) {
       axios
         .post("/login", user)
         .then((result) => {
-          if(result.data.msg === "user is not found") {
-            alert('User is not found!');
-          } else if(result.data.msg === "wrong password" || result.data.msg === "unauthorized user") {
+          if (result.data.msg === "user is not found") {
+            alert("User is not found!");
+          } else if (
+            result.data.msg === "wrong password" ||
+            result.data.msg === "unauthorized user"
+          ) {
             alert("Unauthorized user!");
-          } 
+          }
           if (result.data.user) {
             setIsLoggedIn(true);
             setCurrentUserId(result.data.user.id);
