@@ -19,28 +19,38 @@ export default function Signup({ setDisplaySignupPage }) {
   };
 
   const handleSignup = () => {
-    const newUser = {
-      name: userName,
-      email: userEmail,
-      password: userPassword,
-      avatar: "https://ezparking1.s3.ap-southeast-1.amazonaws.com/uploads/img_avatar.png"
+    const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
+    let newUser;
+    if(!userName || !userPassword || !userEmail){
+      alert('Please input your name, email and password')
+    } else if(!emailPattern.test(userEmail)){
+      alert('Invalid email!')
+    } else {
+      newUser = {
+        name: userName,
+        email: userEmail,
+        password: userPassword,
+        avatar: "https://ezparking1.s3.ap-southeast-1.amazonaws.com/uploads/img_avatar.png"
+      };
+    }
+
+    if(newUser){
+      axios
+        .post("/signup", newUser)
+        .then((result) => {
+          setDisplaySignupPage(false);
+          console.log(result.data);
+          alert("user registered, please log in now!");
+        })
+        .catch((error) => {
+          console.log("Error message: ", error);
+        });
+  
+      setUserName("");
+      setUserEmail("");
+      setUserPassword("");
     };
-
-    axios
-      .post("/signup", newUser)
-      .then((result) => {
-        setDisplaySignupPage(false);
-        console.log(result.data);
-        alert("user registered, please log in now!");
-      })
-      .catch((error) => {
-        console.log("Error message: ", error);
-      });
-
-    setUserName("");
-    setUserEmail("");
-    setUserPassword("");
-  };
+    }
 
   const handleSignin = () => {
     setDisplaySignupPage(false);
@@ -59,15 +69,16 @@ export default function Signup({ setDisplaySignupPage }) {
           onChange={userNameChange}
           placeholder="Name"
           className="form-control my-1"
-          required
+          required="required"
         />
         <input
-          type="text"
+          type="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
           value={userEmail}
           onChange={userEmailChange}
           placeholder="Email"
           className="form-control my-1"
-          required
+          required="required"
         />
         <input
           type="password"
@@ -75,7 +86,7 @@ export default function Signup({ setDisplaySignupPage }) {
           onChange={userPasswordChange}
           placeholder="Password"
           className="form-control my-1"
-          required
+          required="required"
         />
         <button
           type="button"

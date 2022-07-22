@@ -22,8 +22,11 @@ export default function Login({
 
   const handleLogin = () => {
     let user;
+    const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
     if(!userEmail || !userPassword){
       alert('Your email or password is empty!')
+    } else if (!emailPattern.test(userEmail)){
+      alert("Invalid email!")
     } else {
       user = {
       email: userEmail,
@@ -36,10 +39,11 @@ export default function Login({
         .post("/login", user)
         .then((result) => {
           console.log("msg:", result.data)
-          if(result.data.msg === "user is not found") {alert('User is not found!')}
-          else if(result.data.msg === "wrong password" || result.data.msg !== "unauthorized user") {
-            alert("Unauthorized user!")} 
-  
+          if(result.data.msg === "user is not found") {
+            alert('User is not found!');
+          } else if(result.data.msg === "wrong password" || result.data.msg === "unauthorized user") {
+            alert("Unauthorized user!");
+          } 
           if (result.data.user) {
             setIsLoggedIn(true);
             setCurrentUserId(result.data.user.id);
@@ -67,12 +71,13 @@ export default function Login({
           <i className="bi bi-person-circle"></i>
         </div>
         <input
-          type="text"
+          type="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
           value={userEmail}
           onChange={userEmailChange}
           placeholder="Email"
           className="form-control my-1"
-          required
+          required="required"
         />
         <input
           type="password"
@@ -80,7 +85,7 @@ export default function Login({
           onChange={userPasswordChange}
           placeholder="Password"
           className="form-control my-1"
-          required
+          required="required"
         />
         <button
           type="button"
