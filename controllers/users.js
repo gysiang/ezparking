@@ -63,7 +63,7 @@ class Users extends Base {
         res.cookie("plopplop", token, { httpOnly: true });
         res.cookie("userId", user.id, { httpOnly: true });
         res.cookie("APIKEY", process.env.PUBLIC_GOOGLE_MAPS_API_KEY);
-        res.json({
+        return res.json({
           user: {
             id: user.id,
             name: user.name,
@@ -71,6 +71,10 @@ class Users extends Base {
             avatar: user.avatar,
           },
         });
+      } else {
+        return res.json(
+          {msg: "wrong password"}
+        )
       }
     } catch (error) {
       console.log("Error message: ", error);
@@ -166,13 +170,9 @@ class Users extends Base {
   }
 
   logoutUser(req, res) {
-    // res.clearCookie("plopplop").clearCookie("userId").clearCookie("APIKEY");
     if(req.userId){
       console.log("userId: ", req.userId)
-      // req.session.destroy();
       res.clearCookie("plopplop").clearCookie("APIKEY").clearCookie("userId");
-      // res.clearCookie("userId");
-      // res.clearCookie("APIKEY");
       return res.json({msg: 'logging you out'})
     } else {
       return res.json({msg: 'no user to log out!'})

@@ -35,7 +35,8 @@ export default function Login({
       axios
         .post("/login", user)
         .then((result) => {
-          if (result.data !== "Unauthorized user") {
+          console.log("msg:", result.data)
+          if (result.data !== "Unauthorized user" && result.data !== "wrong password") {
             setIsLoggedIn(true);
             setCurrentUserId(result.data.user.id);
             setUserName(result.data.user.name);
@@ -44,6 +45,7 @@ export default function Login({
           } else {
             alert("Unauthorized user");
           }
+    
         })
         .catch((error) => {
           console.log("Error message: ", error);

@@ -29,6 +29,8 @@ export default function Navbar({ setShowUserProfile, token, setIsLoggedIn, userN
             },
           });
           setIsLoggedIn(false);
+          localStorage.clear();
+
         }}
         className="logoutIcon"
       >
