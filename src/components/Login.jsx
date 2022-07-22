@@ -8,8 +8,8 @@ export default function Login({
   setUserName,
   setAvatar,
 }) {
-  const [userEmail, setUserEmail] = useState("coco@gmail.com");
-  const [userPassword, setUserPassword] = useState("123");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
   
 
   const userEmailChange = (e) => {
@@ -36,16 +36,16 @@ export default function Login({
         .post("/login", user)
         .then((result) => {
           console.log("msg:", result.data)
-          if (result.data !== "Unauthorized user" && result.data !== "wrong password") {
+          if(result.data.msg === "user is not found") {alert('User is not found!')}
+          else if(result.data.msg === "wrong password" || result.data.msg !== "unauthorized user") {
+            alert("Unauthorized user!")} 
+  
+          if (result.data.user) {
             setIsLoggedIn(true);
             setCurrentUserId(result.data.user.id);
             setUserName(result.data.user.name);
             setAvatar(result.data.user.avatar);
-            console.log("login: ", result.data.user.avatar)
-          } else {
-            alert("Unauthorized user");
           }
-    
         })
         .catch((error) => {
           console.log("Error message: ", error);

@@ -6,8 +6,6 @@ const multer = require("multer");
 const { fileFilter } = require("../middleware/multer")
 const storage = multer.memoryStorage()
 const multerUpload = multer({ storage ,fileFilter });
-// const multerUpload = multer({ dest: 'uploads/' });
-
 
 class UsersRouter {
   constructor(controller) {
@@ -22,10 +20,10 @@ class UsersRouter {
       .post("/signup", this.controller.signupUser.bind(this.controller))
       .post("/login", this.controller.loginUser.bind(this.controller))
       .get("/currentUser", this.controller.getCurrentUser.bind(this.controller))
-      .get("/currentUserProfile", this.controller.getCurrentUserProfile.bind(this.controller))
-      .post("/uploadAvatar",multerUpload.single("avatar"), this.controller.uploadAvatar.bind(this.controller))
-      .put("/updateUserAvatar",this.controller.updateUserAvatar.bind(this.controller))
-      .put("/currentUserProfile", this.controller.editCurrentUserProfile.bind(this.controller))
+      .get("/currentUserProfile", authSession, this.controller.getCurrentUserProfile.bind(this.controller))
+      .post("/uploadAvatar", authSession, multerUpload.single("avatar"), this.controller.uploadAvatar.bind(this.controller))
+      .put("/updateUserAvatar", authSession, this.controller.updateUserAvatar.bind(this.controller))
+      .put("/currentUserProfile", authSession, this.controller.editCurrentUserProfile.bind(this.controller))
       .post(
         "/logout",
         authSession,

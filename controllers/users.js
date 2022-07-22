@@ -50,19 +50,20 @@ class Users extends Base {
         },
       });
 
+      console.log('user email:', user)
+
       if (!user) {
-        return res.status(400).send("User is not found!");
-      }
+        return res.json({ msg: "user is not found" });
+      } 
 
       const match = await bcrypt.compare(req.body.password, user.password);
       if (match) {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "24 hours",
         });
-        console.log(process.env.PUBLIC_GOOGLE_MAPS_API_KEY);
         res.cookie("plopplop", token, { httpOnly: true });
         res.cookie("userId", user.id, { httpOnly: true });
-        res.cookie("APIKEY", process.env.PUBLIC_GOOGLE_MAPS_API_KEY);
+        res.cookie("APIKEY", process.env.PUBLIC_GOOGLE_MAPS_API_KEY, { httpOnly: true });
         return res.json({
           user: {
             id: user.id,
@@ -72,13 +73,12 @@ class Users extends Base {
           },
         });
       } else {
-        return res.json(
-          {msg: "wrong password"}
-        )
+        return res.json({ msg: "wrong password" });
       }
+        
     } catch (error) {
       console.log("Error message: ", error);
-      return res.send("Unauthorized user");
+      return res.json({ msg: "unauthorized user" });
     }
   }
 
