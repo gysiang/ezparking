@@ -59,6 +59,7 @@ export default function Signup({ setDisplaySignupPage }) {
           onChange={userNameChange}
           placeholder="Name"
           className="form-control my-1"
+          required
         />
         <input
           type="text"
@@ -66,6 +67,7 @@ export default function Signup({ setDisplaySignupPage }) {
           onChange={userEmailChange}
           placeholder="Email"
           className="form-control my-1"
+          required
         />
         <input
           type="password"
@@ -73,6 +75,7 @@ export default function Signup({ setDisplaySignupPage }) {
           onChange={userPasswordChange}
           placeholder="Password"
           className="form-control my-1"
+          required
         />
         <button
           type="button"

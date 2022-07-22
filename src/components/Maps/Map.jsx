@@ -211,7 +211,7 @@ export function Map ({
                 style={{marginLeft: "10px"}}
                 onClick={(event) => openMapsHandler(event, selectedPlace)}
               >
-                <i class="bi bi-map" style={{fontSize: "20px", color: "blue"}}></i>
+                <i className="bi bi-map" style={{fontSize: "20px", color: "blue"}}></i>
               </a>
               &nbsp;
               <a

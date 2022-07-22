@@ -21,27 +21,34 @@ export default function Login({
   };
 
   const handleLogin = () => {
-    const user = {
+    let user;
+    if(!userEmail || !userPassword){
+      alert('Your email or password is empty!')
+    } else {
+      user = {
       email: userEmail,
       password: userPassword,
     };
+  }
 
-    axios
-      .post("/login", user)
-      .then((result) => {
-        if (result.data !== "Unauthorized user") {
-          setIsLoggedIn(true);
-          setCurrentUserId(result.data.user.id);
-          setUserName(result.data.user.name);
-          setAvatar(result.data.user.avatar);
-          console.log("login: ", result.data.user.avatar)
-        } else {
-          alert("Unauthorized user");
-        }
-      })
-      .catch((error) => {
-        console.log("Error message: ", error);
-      });
+    if(user){
+      axios
+        .post("/login", user)
+        .then((result) => {
+          if (result.data !== "Unauthorized user") {
+            setIsLoggedIn(true);
+            setCurrentUserId(result.data.user.id);
+            setUserName(result.data.user.name);
+            setAvatar(result.data.user.avatar);
+            console.log("login: ", result.data.user.avatar)
+          } else {
+            alert("Unauthorized user");
+          }
+        })
+        .catch((error) => {
+          console.log("Error message: ", error);
+        });
+    }
 
     setUserEmail("");
     setUserPassword("");
@@ -63,6 +70,7 @@ export default function Login({
           onChange={userEmailChange}
           placeholder="Email"
           className="form-control my-1"
+          required
         />
         <input
           type="password"
@@ -70,6 +78,7 @@ export default function Login({
           onChange={userPasswordChange}
           placeholder="Password"
           className="form-control my-1"
+          required
         />
         <button
           type="button"

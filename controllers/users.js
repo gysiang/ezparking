@@ -51,7 +51,6 @@ class Users extends Base {
       });
 
       if (!user) {
-        alert("User is not found, please sign up first!");
         return res.status(400).send("User is not found!");
       }
 
@@ -166,9 +165,18 @@ class Users extends Base {
     }
   }
 
-
   logoutUser(req, res) {
-    res.clearCookie("plopplop", "userId", "APIKEY");
+    // res.clearCookie("plopplop").clearCookie("userId").clearCookie("APIKEY");
+    if(req.userId){
+      console.log("userId: ", req.userId)
+      // req.session.destroy();
+      res.clearCookie("plopplop").clearCookie("APIKEY").clearCookie("userId");
+      // res.clearCookie("userId");
+      // res.clearCookie("APIKEY");
+      return res.json({msg: 'logging you out'})
+    } else {
+      return res.json({msg: 'no user to log out!'})
+    }
   }
 }
 
