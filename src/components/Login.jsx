@@ -8,8 +8,8 @@ export default function Login({
   setUserName,
   setAvatar,
 }) {
-  const [userEmail, setUserEmail] = useState("coco@gmail.com");
-  const [userPassword, setUserPassword] = useState("123");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
   
 
   const userEmailChange = (e) => {
@@ -21,27 +21,40 @@ export default function Login({
   };
 
   const handleLogin = () => {
-    const user = {
+    let user;
+    const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
+    if(!userEmail || !userPassword){
+      alert('Your email or password is empty!')
+    } else if (!emailPattern.test(userEmail)){
+      alert("Invalid email!")
+    } else {
+      user = {
       email: userEmail,
       password: userPassword,
     };
+  }
 
-    axios
-      .post("/login", user)
-      .then((result) => {
-        if (result.data !== "Unauthorized user") {
-          setIsLoggedIn(true);
-          setCurrentUserId(result.data.user.id);
-          setUserName(result.data.user.name);
-          setAvatar(result.data.user.avatar);
-          console.log("login: ", result.data.user.avatar)
-        } else {
-          alert("Unauthorized user");
-        }
-      })
-      .catch((error) => {
-        console.log("Error message: ", error);
-      });
+    if(user){
+      axios
+        .post("/login", user)
+        .then((result) => {
+          console.log("msg:", result.data)
+          if(result.data.msg === "user is not found") {
+            alert('User is not found!');
+          } else if(result.data.msg === "wrong password" || result.data.msg === "unauthorized user") {
+            alert("Unauthorized user!");
+          } 
+          if (result.data.user) {
+            setIsLoggedIn(true);
+            setCurrentUserId(result.data.user.id);
+            setUserName(result.data.user.name);
+            setAvatar(result.data.user.avatar);
+          }
+        })
+        .catch((error) => {
+          console.log("Error message: ", error);
+        });
+    }
 
     setUserEmail("");
     setUserPassword("");
@@ -58,11 +71,13 @@ export default function Login({
           <i className="bi bi-person-circle"></i>
         </div>
         <input
-          type="text"
+          type="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
           value={userEmail}
           onChange={userEmailChange}
           placeholder="Email"
           className="form-control my-1"
+          required="required"
         />
         <input
           type="password"
@@ -70,6 +85,7 @@ export default function Login({
           onChange={userPasswordChange}
           placeholder="Password"
           className="form-control my-1"
+          required="required"
         />
         <button
           type="button"

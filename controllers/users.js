@@ -12,9 +12,9 @@ class Users extends Base {
   async signupUser(req, res) {
     try {
       const { name, email, password, avatar } = req.body;
-      if (!name || !email || !password) {
-        return res.status(400).json({ msg: "Need to fill all field!" });
-      }
+      // if (!name || !email || !password) {
+      //   return res.status(400).json({ msg: "Need to fill all field!" });
+      // }
 
       const existingUser = await this.model.findOne({
         where: {
@@ -23,7 +23,7 @@ class Users extends Base {
       });
 
       if (existingUser) {
-        return res.status(400).json({ msg: "User signup error." });
+        return res.json({ msg: "User signup error." });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,21 +50,21 @@ class Users extends Base {
         },
       });
 
+      console.log('user email:', user)
+
       if (!user) {
-        alert("User is not found, please sign up first!");
-        return res.status(400).send("User is not found!");
-      }
+        return res.json({ msg: "user is not found" });
+      } 
 
       const match = await bcrypt.compare(req.body.password, user.password);
       if (match) {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "24 hours",
         });
-        console.log(process.env.PUBLIC_GOOGLE_MAPS_API_KEY);
         res.cookie("plopplop", token, { httpOnly: true });
         res.cookie("userId", user.id, { httpOnly: true });
-        res.cookie("APIKEY", process.env.PUBLIC_GOOGLE_MAPS_API_KEY);
-        res.json({
+        res.cookie("APIKEY", process.env.PUBLIC_GOOGLE_MAPS_API_KEY, { httpOnly: true });
+        return res.json({
           user: {
             id: user.id,
             name: user.name,
@@ -72,10 +72,13 @@ class Users extends Base {
             avatar: user.avatar,
           },
         });
+      } else {
+        return res.json({ msg: "wrong password" });
       }
+        
     } catch (error) {
       console.log("Error message: ", error);
-      return res.send("Unauthorized user");
+      return res.json({ msg: "unauthorized user" });
     }
   }
 
@@ -166,9 +169,14 @@ class Users extends Base {
     }
   }
 
-
   logoutUser(req, res) {
-    res.clearCookie("plopplop", "userId", "APIKEY");
+    if(req.userId){
+      console.log("userId: ", req.userId)
+      res.clearCookie("plopplop").clearCookie("APIKEY").clearCookie("userId");
+      return res.json({msg: 'logging you out'})
+    } else {
+      return res.json({msg: 'no user to log out!'})
+    }
   }
 }
 
