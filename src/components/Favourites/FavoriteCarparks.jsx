@@ -7,35 +7,33 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
   let favCarparksList = [];
   if (lotsFromURA && favCarparks) {
     newCarparkList = GeoConverter(lotsFromURA);
-    console.log("carparks: ", favCarparks)
-      favCarparksList = favCarparks.map((carpark) => {
-        if(carpark){
-          let current = newCarparkList.find(
-            (c) => c.carparkNo === carpark.carparkNo
-          );
-          if (current) {
-            return {
-              ...carpark,
-              lat: current.position.lat,
-              lng: current.position.lng,
-            };
-          } else {
-            let allCarparksList = GeoConverter(allCarparks.Result);
-            let crt = allCarparksList.find((c) => c.ppCode === carpark.carparkNo);
-            return {
-              ...carpark,
-              lat: crt.position.lat,
-              lng: crt.position.lng,
-            };
-          }
+    favCarparksList = favCarparks.map((carpark) => {
+      if (carpark) {
+        let current = newCarparkList.find(
+          (c) => c.carparkNo === carpark.carparkNo
+        );
+        if (current) {
+          return {
+            ...carpark,
+            lat: current.position.lat,
+            lng: current.position.lng,
+          };
+        } else {
+          let allCarparksList = GeoConverter(allCarparks.Result);
+          let crt = allCarparksList.find((c) => c.ppCode === carpark.carparkNo);
+          return {
+            ...carpark,
+            lat: crt.position.lat,
+            lng: crt.position.lng,
+          };
         }
-      });
-      // console.log("current carpark list:",favCarparksList)
-    }
+      }
+    });
+  }
   return (
     <ul className="mx-0 px-0">
       {favCarparksList.map((carpark, index) => (
-        <li key={String(index)} style={{listStyle: "none"}}>
+        <li key={String(index)} style={{ listStyle: "none" }}>
           <a
             onClick={() => {
               window.open(
@@ -47,9 +45,8 @@ export default function FavoriteCarparks({ favCarparks, lotsFromURA }) {
               );
             }}
           >
-            <i className="fa-solid fa-heart" style={{color: "red"}}></i>
-             {" "}
-          {carpark.carparkName}
+            <i className="fa-solid fa-heart" style={{ color: "red" }}></i>{" "}
+            {carpark.carparkName}
           </a>
         </li>
       ))}

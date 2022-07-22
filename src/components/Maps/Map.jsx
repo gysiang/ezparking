@@ -9,7 +9,7 @@ import myPlaces from "./FilteredList.jsx";
 import axios from "axios";
 import { async } from "regenerator-runtime";
 
-export function Map ({
+export function Map({
   userLocation,
   userZoom,
   setMounted,
@@ -53,9 +53,9 @@ export function Map ({
     fitBounds(map);
   };
 
-    useEffect(() => {
-      setCenter({ lat: 1.290270, lng: 103.851959 })
-      setZoom(10)
+  useEffect(() => {
+    setCenter({ lat: 1.29027, lng: 103.851959 });
+    setZoom(10);
   }, [showUserProfile]);
 
   // We have to create a mapping of our places to actual Marker objects
@@ -98,10 +98,7 @@ export function Map ({
     let newFavoriteCarparks = favCarparks.filter(
       (c) => c.carparkNo !== carparkInfo.carparkNo
     );
-    // console.log("curent carparks list: ", newFavoriteCarparks);
     setFavCarparks(newFavoriteCarparks);
-    // console.log("prev carparks list: ", favCarparks)
-    console.log("carpark info:", carparkInfo)
 
     // Update DB user_carparks table
     axios
@@ -131,7 +128,6 @@ export function Map ({
     axios
       .post("/addCarpark", userCarparkInfo, Headers)
       .then((result) => {
-        console.log("id to delete:", result.data.delete);
         if (result.data.delete) {
           let carparkInfo = {
             carparkId: result.data.delete,
@@ -141,7 +137,6 @@ export function Map ({
           // alert("Remove carpark from my favorite carpark list");
           handleRemoveFavoriteCarpark(carparkInfo);
         } else {
-
           let newFavoriteCarpark = result.data.newFavoriteCarpark;
           let newFavoriteCarparks = [...favCarparks, newFavoriteCarpark];
           setFavCarparks(newFavoriteCarparks);
@@ -166,7 +161,6 @@ export function Map ({
     setisFiltered(true);
     setnewList(newList);
   }
-
 
   if (newList.length > 0) {
     return (
@@ -197,30 +191,39 @@ export function Map ({
           >
             <div className="text-center">
               <h6 className="text-center">{selectedPlace.ppName}</h6>
-              <hr style={{margin: "0 0 5px 0"}}/>
+              <hr style={{ margin: "0 0 5px 0" }} />
               {/* <div>{selectedPlace.ppCode}</div> */}
               <div>Available Lots: {selectedPlace.lotsAvailable}</div>
               <div>Vehicle Category:{selectedPlace.vehCat}</div>
               <div>Weekday Rate: {selectedPlace.weekdayRate}</div>
-              <div>Weekend Rate: {selectedPlace.satdayRate}</div> 
-              <div>Operation Time: {selectedPlace.startTime} - {selectedPlace.endTime}</div> 
+              <div>Weekend Rate: {selectedPlace.satdayRate}</div>
+              <div>
+                Operation Time: {selectedPlace.startTime} -{" "}
+                {selectedPlace.endTime}
+              </div>
               <br />
               <div className="d-flex flex-row justify-content-around align-items-center">
-              <a
-                type="button"
-                style={{marginLeft: "10px"}}
-                onClick={(event) => openMapsHandler(event, selectedPlace)}
-              >
-                <i className="bi bi-map" style={{fontSize: "20px", color: "blue"}}></i>
-              </a>
-              &nbsp;
-              <a
-                type="button"
-                style={{marginRight: "10px"}}
-                onClick={(event) => favouritesHandler(event, selectedPlace)}
-              >
-                <i className="bi bi-heart favIcon" style={{fontSize: "20px", color: "red"}}></i>
-              </a>
+                <a
+                  type="button"
+                  style={{ marginLeft: "10px" }}
+                  onClick={(event) => openMapsHandler(event, selectedPlace)}
+                >
+                  <i
+                    className="bi bi-map"
+                    style={{ fontSize: "20px", color: "blue" }}
+                  ></i>
+                </a>
+                &nbsp;
+                <a
+                  type="button"
+                  style={{ marginRight: "10px" }}
+                  onClick={(event) => favouritesHandler(event, selectedPlace)}
+                >
+                  <i
+                    className="bi bi-heart favIcon"
+                    style={{ fontSize: "20px", color: "red" }}
+                  ></i>
+                </a>
               </div>
             </div>
           </InfoWindow>

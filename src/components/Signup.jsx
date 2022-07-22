@@ -21,41 +21,40 @@ export default function Signup({ setDisplaySignupPage }) {
   const handleSignup = () => {
     const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
     let newUser;
-    if(!userName || !userPassword || !userEmail){
-      alert('Please input your name, email and password')
-    } else if(!emailPattern.test(userEmail)){
-      alert('Invalid email!')
+    if (!userName || !userPassword || !userEmail) {
+      alert("Please input your name, email and password");
+    } else if (!emailPattern.test(userEmail)) {
+      alert("Invalid email!");
     } else {
       newUser = {
         name: userName,
         email: userEmail,
         password: userPassword,
-        avatar: "https://ezparking1.s3.ap-southeast-1.amazonaws.com/uploads/img_avatar.png"
+        avatar:
+          "https://ezparking1.s3.ap-southeast-1.amazonaws.com/uploads/img_avatar.png",
       };
     }
 
-    if(newUser){
+    if (newUser) {
       axios
         .post("/signup", newUser)
         .then((result) => {
-          console.log("sign up msg: ", result.data.msg);
-          if(result.data.msg === "User signup error.") {
-            alert('User already signed up.')
+          if (result.data.msg === "User signup error.") {
+            alert("User already signed up.");
             return;
           }
           setDisplaySignupPage(false);
-          console.log(result.data);
           alert("user registered, please log in now!");
         })
         .catch((error) => {
           console.log("Error message: ", error);
         });
-  
+
       setUserName("");
       setUserEmail("");
       setUserPassword("");
-    };
     }
+  };
 
   const handleSignin = () => {
     setDisplaySignupPage(false);

@@ -4,11 +4,6 @@ import React from "react";
 export default function GetUserGeolocation({ setuserLocation, setuserZoom }) {
   function success(pos) {
     const crd = pos.coords;
-
-    console.log("Your current position is:");
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
     const data = {
       lat: crd.latitude,
       lng: crd.longitude,
