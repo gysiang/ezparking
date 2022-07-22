@@ -18,7 +18,6 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
     axios
       .get("/currentUserProfile", user)
       .then((result)=> {
-        console.log(result.data)
         setUserName(result.data.user.name)
         setUserEmail(result.data.user.email)
         setAvatar(result.data.user.avatar)
@@ -94,7 +93,7 @@ export default function UserProfile({showUserProfile, setShowUserProfile, userNa
     <div className="userProfileDiv d-flex flex-column justify-content-center align-items-center">
       <div className="d-flex flex-column border p-2 align-items-center rounded">
         <h5>User Profile</h5>
-        <img src={avatar} />
+        <img src={avatar} style={{width: "80px", height: "80px", borderRadius: "40px"}} />
         <br/>
         <FileUploader 
         selectedFile={selectedFile}

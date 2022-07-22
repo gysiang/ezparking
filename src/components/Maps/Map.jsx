@@ -98,10 +98,7 @@ export function Map ({
     let newFavoriteCarparks = favCarparks.filter(
       (c) => c.carparkNo !== carparkInfo.carparkNo
     );
-    // console.log("curent carparks list: ", newFavoriteCarparks);
     setFavCarparks(newFavoriteCarparks);
-    // console.log("prev carparks list: ", favCarparks)
-    console.log("carpark info:", carparkInfo)
 
     // Update DB user_carparks table
     axios
@@ -131,7 +128,6 @@ export function Map ({
     axios
       .post("/addCarpark", userCarparkInfo, Headers)
       .then((result) => {
-        console.log("id to delete:", result.data.delete);
         if (result.data.delete) {
           let carparkInfo = {
             carparkId: result.data.delete,

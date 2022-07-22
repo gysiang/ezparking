@@ -47,7 +47,6 @@ class Carparks extends Base {
         Headers
       );
       const availableCarparksdata = getCarparksData.data.Result;
-      // console.log("availableCarparksdata", availableCarparksdata);
 
       // Fetch carpark details:
       const getCarparksDetails = await axios.get(
@@ -87,7 +86,6 @@ class Carparks extends Base {
 
   async addCarpark(req, res) {
     const { userId, carparkNo, lotType, carparkName } = req.body;
-    // console.log("carpark name: ", carparkName);
     try {
       // Find carpark from DB
       const carpark = await this.model.findOne({

@@ -3,12 +3,6 @@ import axios from "axios";
 import { NavbarImg } from "./Avatar.jsx";
 
 export default function Navbar({ setShowUserProfile, token, setIsLoggedIn, userName, avatar }) {
-  // let name = localStorage.getItem("userName")
-  // let avatar = localStorage.getItem("avatar");
-  // console.log(avatar)
-  // console.log("avatar: ", ava)
-  // console.log('user name: ', name)
-
 
   return (
     <nav className="nav d-flex justify-content-between align-items-center px-3">

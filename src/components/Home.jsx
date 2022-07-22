@@ -50,10 +50,7 @@ export default function Home({
         },
       })
       .then((result) => {
-        // console.log("get available lots",result.data.carparks);
         setlotsFromURA(result.data.carparks);
-        // console.log("home carparks: ", result.data.carparks);
-        // console.log("converted carparks: ", GeoConverter(result.data.carparks));
       })
       .catch((error) => {
         console.log("Unable to fetch carpark data: ", error);
@@ -87,7 +84,6 @@ export default function Home({
   }, [lotsFromURA]);
 
   useEffect(() => {
-    // console.log("mounted", mounted);
   }, [mounted]);
 
   return (

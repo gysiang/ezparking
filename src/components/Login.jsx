@@ -38,7 +38,6 @@ export default function Login({
       axios
         .post("/login", user)
         .then((result) => {
-          console.log("msg:", result.data)
           if(result.data.msg === "user is not found") {
             alert('User is not found!');
           } else if(result.data.msg === "wrong password" || result.data.msg === "unauthorized user") {

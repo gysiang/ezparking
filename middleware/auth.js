@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 
+// JWT token send through httponly cookie
 const authSession = (req, res, next) => {
   try {
     const cookies = req.cookies;
@@ -22,6 +23,7 @@ const authSession = (req, res, next) => {
   }
 };
 
+// JWT token, front-end need to store in localstorage
 const auth = (req, res, next) => {
   try {
     const authHeader = req.header("authorization");
