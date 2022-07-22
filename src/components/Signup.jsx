@@ -38,6 +38,11 @@ export default function Signup({ setDisplaySignupPage }) {
       axios
         .post("/signup", newUser)
         .then((result) => {
+          console.log("sign up msg: ", result.data.msg);
+          if(result.data.msg === "User signup error.") {
+            alert('User already signed up.')
+            return;
+          }
           setDisplaySignupPage(false);
           console.log(result.data);
           alert("user registered, please log in now!");

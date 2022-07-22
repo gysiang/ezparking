@@ -12,9 +12,9 @@ class Users extends Base {
   async signupUser(req, res) {
     try {
       const { name, email, password, avatar } = req.body;
-      if (!name || !email || !password) {
-        return res.status(400).json({ msg: "Need to fill all field!" });
-      }
+      // if (!name || !email || !password) {
+      //   return res.status(400).json({ msg: "Need to fill all field!" });
+      // }
 
       const existingUser = await this.model.findOne({
         where: {
@@ -23,7 +23,7 @@ class Users extends Base {
       });
 
       if (existingUser) {
-        return res.status(400).json({ msg: "User signup error." });
+        return res.json({ msg: "User signup error." });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
